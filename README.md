@@ -1,5 +1,5 @@
 
-# Lucrey
+# Lucreyy
 
 **Jogo educativo de mercado de ações que combina matemática, estratégia e tomada de decisões.**
 
