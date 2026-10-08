@@ -1,3 +1,25 @@
-# Godot 4+ specific ignores
+# Cache específico do Godot 4+
 .godot/
-/android/
+
+# Arquivos temporários e logs
+*.tmp
+*.log
+
+# Configurações de exportação (podem conter senhas/chaves se você configurá-las)
+export.cfg
+export_presets.cfg
+export_credentials.cfg
+
+# Binários gerados automaticamente ao exportar o jogo (opcional, mas recomendado)
+*.exe
+*.apk
+*.aab
+*.ipa
+*.dmg
+*.pck
+*.zip
+
+# Arquivos do Mono/C# (caso decida usar C# no futuro)
+.mono/
+data_*/
+mono_crash.*.json
