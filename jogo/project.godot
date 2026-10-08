@@ -15,6 +15,11 @@ run/main_scene="uid://da33owg1rmgdv"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Market="*uid://d2yqdylowmveo"
+GameState="*uid://bbo25stpvv050"
+
 [display]
 
 window/stretch/mode="canvas_items"
