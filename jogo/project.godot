@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Market="*uid://d2yqdylowmveo"
 GameState="*uid://bbo25stpvv050"
+Market="*uid://d2yqdylowmveo"
 
 [display]
 

@@ -1,9 +1,9 @@
-extends Node
+extends Node2D
 ## Autoload "GameState": dinheiro e carteira do jogador.
 
 signal dinheiro_mudou(novo_valor: float)
 
-const DINHEIRO_INICIAL := 10000.0
+const DINHEIRO_INICIAL := 1000.0
 
 var dinheiro: float = DINHEIRO_INICIAL:
 	set(valor):
@@ -15,7 +15,7 @@ var carteira: Dictionary = {}
 
 
 func comprar(ticker: String, quantidade: int) -> bool:
-	var acao := Market.buscar(ticker)
+	var acao: Stock = Market.buscar(ticker)
 	if acao == null or quantidade <= 0:
 		return false
 	var custo := acao.preco * quantidade
@@ -27,7 +27,7 @@ func comprar(ticker: String, quantidade: int) -> bool:
 
 
 func vender(ticker: String, quantidade: int) -> bool:
-	var acao := Market.buscar(ticker)
+	var acao: Stock = Market.buscar(ticker)
 	if acao == null or quantidade <= 0:
 		return false
 	if carteira.get(ticker, 0) < quantidade:
