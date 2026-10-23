@@ -25,8 +25,24 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fr1xc"]
+bg_color = Color(0.7413847, 0.7413847, 0.7413844, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pawul"]
+bg_color = Color(0.23529412, 0.6156863, 0.24705882, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
 [resource]
 Button/styles/hover = SubResource("StyleBoxFlat_akwjr")
 Button/styles/normal = SubResource("StyleBoxFlat_py3gm")
 Button/styles/pressed = SubResource("StyleBoxFlat_bwxek")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ltphf")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_fr1xc")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_pawul")

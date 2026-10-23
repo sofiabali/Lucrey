@@ -50,3 +50,22 @@ func patrimonio() -> float:
 func rentabilidade() -> float:
 	# Em %, em relação ao dinheiro inicial (o "+24,35%" do seu protótipo).
 	return (patrimonio() / DINHEIRO_INICIAL - 1.0) * 100.0
+
+signal xp_mudou
+
+var nivel: int = 1
+var xp: int = 0
+
+
+func xp_para_proximo_nivel() -> int:
+	return nivel * 250
+
+func ganhar_xp(quantidade: int) -> void:
+	xp += quantidade
+	
+	while xp >= xp_para_proximo_nivel():
+		xp -= xp_para_proximo_nivel()
+		nivel += 1
+		
+	xp_mudou.emit()	
+	pass

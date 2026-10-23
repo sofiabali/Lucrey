@@ -5,12 +5,16 @@ extends CanvasLayer
 @onready var label_rentabilidade: Label = %ValorRentabilidade
 @onready var label_dia: Label = %LabelDia
 @onready var botao_avancar: Button = %BotaoAvancar
+@onready var label_nivel: Label = %LabelNivel
+@onready var label_xp: Label = %LabelXp
+@onready var barra_xp: ProgressBar = %BarraXp
 
 
 func _ready() -> void:
 	botao_avancar.pressed.connect(_on_botao_avancar_pressed)
 	GameState.dinheiro_mudou.connect(_on_dinheiro_mudou)
 	Market.dia_avancou.connect(_on_dia_avancou)
+	GameState.xp_mudou.connect(_atualizar_tudo)
 	_atualizar_tudo()
 	
 func _atualizar_tudo() -> void:
@@ -29,7 +33,10 @@ func _atualizar_tudo() -> void:
 
 	label_rentabilidade.text = "%+.2f%%" % rent
 	label_dia.text = "Dia %d" % Market.dia
-	
+	label_nivel.text = "NÍVEL %d" % GameState.nivel
+	label_xp.text = "%d / %d XP" % [GameState.xp, GameState.xp_para_proximo_nivel()]
+	barra_xp.max_value = GameState.xp_para_proximo_nivel()
+	barra_xp.value = GameState.xp	
 
 
 func _on_botao_avancar_pressed() -> void:
