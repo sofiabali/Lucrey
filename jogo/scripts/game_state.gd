@@ -1,14 +1,11 @@
-extends Node2D
+extends Node
 ## Autoload "GameState": dinheiro e carteira do jogador.
 
 signal dinheiro_mudou(novo_valor: float)
 
 const DINHEIRO_INICIAL := 1000.0
 
-var dinheiro: float = DINHEIRO_INICIAL:
-	set(valor):
-		dinheiro = valor
-		dinheiro_mudou.emit(dinheiro)
+var dinheiro: float = DINHEIRO_INICIAL
 
 ## ticker -> quantidade de ações
 var carteira: Dictionary = {}
@@ -23,6 +20,7 @@ func comprar(ticker: String, quantidade: int) -> bool:
 		return false
 	dinheiro -= custo
 	carteira[ticker] = carteira.get(ticker, 0) + quantidade
+	dinheiro_mudou.emit(dinheiro)
 	return true
 
 
@@ -34,6 +32,7 @@ func vender(ticker: String, quantidade: int) -> bool:
 		return false
 	carteira[ticker] -= quantidade
 	dinheiro += acao.preco * quantidade
+	dinheiro_mudou.emit(dinheiro)
 	return true
 
 

@@ -18,7 +18,7 @@ func _atualizar_tudo() -> void:
 	label_dinheiro.text = "Dinheiro: R$ %.2f" % GameState.dinheiro
 	label_patrimonio.text = "Patrimônio: R$ %.2f" % GameState.patrimonio()
 	label_rentabilidade.text = "Rentabilidade: R$ %+.2f%%" % GameState.rentabilidade()
-	label_dia.text = "Dia R$ %d" % Market.dia
+	label_dia.text = "Dia %d" % Market.dia
 	pass
 
 

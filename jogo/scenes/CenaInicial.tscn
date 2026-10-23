@@ -1,3 +1,7 @@
 [gd_scene format=3 uid="uid://da33owg1rmgdv"]
 
+[ext_resource type="PackedScene" uid="uid://cvgb8dg7x0g30" path="res://scenes/hud.tscn" id="1_bmk6m"]
+
 [node name="CenaInicial" type="Node2D" unique_id=2115016792]
+
+[node name="HUD" parent="." unique_id=1770219081 instance=ExtResource("1_bmk6m")]

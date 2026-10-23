@@ -13,6 +13,7 @@ func _ready() -> void:
 	var sorteio := acoes_disponiveis.duplicate()
 	sorteio.shuffle()
 
+""""
 	for n in 2:
 		# 1. Pega a posição n da lista embaralhada
 		var acao_sorteada: String = sorteio[n]
@@ -31,12 +32,12 @@ func _ready() -> void:
 		if not GameState.comprar(acao_sorteada, qtd_aleatoria):
 			print("-> Compra de %s recusada (Saldo insuficiente)" % acao_sorteada)
 		else: 
-			print("-> %d ações de %s compradas com sucesso!" % [qtd_aleatoria, acao_sorteada])
+			print("-> %d ações de %s compradas com sucesso!" % [qtd_aleatoria, acao_sorteada]) 
 			
 	# Avança os dias após as duas tentativas
-	for i in 10:
-		Market.avancar_dia()
-
+#	for i in 10:
+#		Market.avancar_dia()
+"""
 
 func _on_dinheiro_mudou(novo_valor: float) -> void:
 	print("  Dinheiro agora: R$ %.2f" % novo_valor)
