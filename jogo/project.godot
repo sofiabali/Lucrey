@@ -25,6 +25,10 @@ Market="*uid://d2yqdylowmveo"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[gui]
+
+theme/custom="uid://b2fm4ln5os0ra"
+
 [input]
 
 mover_frente={
