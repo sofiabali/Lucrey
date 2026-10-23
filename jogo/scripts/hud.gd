@@ -14,7 +14,7 @@ func _ready() -> void:
 	_atualizar_tudo()
 	
 func _atualizar_tudo() -> void:
-	# TODO: preencher o .text de cada Label (formato igual aos prints do main.gd)
+
 	label_dinheiro.text = "R$ %.2f" % GameState.dinheiro
 	label_patrimonio.text = "R$ %.2f" % GameState.patrimonio()
 	# Mudando tema a depender da rentabilidade
@@ -30,7 +30,6 @@ func _atualizar_tudo() -> void:
 	label_rentabilidade.text = "%+.2f%%" % rent
 	label_dia.text = "Dia %d" % Market.dia
 	
-	pass
 
 
 func _on_botao_avancar_pressed() -> void:
