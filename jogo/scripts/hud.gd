@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-@onready var label_dinheiro: Label = %LabelDinheiro
-@onready var label_patrimonio: Label = %LabelPatrimonio
-@onready var label_rentabilidade: Label = %LabelRentabilidade
+@onready var label_dinheiro: Label = %ValorDinheiro
+@onready var label_patrimonio: Label = %ValorPatrimonio
+@onready var label_rentabilidade: Label = %ValorRentabilidade
 @onready var label_dia: Label = %LabelDia
 @onready var botao_avancar: Button = %BotaoAvancar
 
@@ -15,10 +15,21 @@ func _ready() -> void:
 	
 func _atualizar_tudo() -> void:
 	# TODO: preencher o .text de cada Label (formato igual aos prints do main.gd)
-	label_dinheiro.text = "Dinheiro: R$ %.2f" % GameState.dinheiro
-	label_patrimonio.text = "Patrimônio: R$ %.2f" % GameState.patrimonio()
-	label_rentabilidade.text = "Rentabilidade: R$ %+.2f%%" % GameState.rentabilidade()
+	label_dinheiro.text = "R$ %.2f" % GameState.dinheiro
+	label_patrimonio.text = "R$ %.2f" % GameState.patrimonio()
+	# Mudando tema a depender da rentabilidade
+	var rent: float = GameState.rentabilidade()
+
+	if rent < 0:
+		label_rentabilidade.add_theme_color_override("font_color", Color.CRIMSON)
+	elif rent > 0:
+		label_rentabilidade.add_theme_color_override("font_color", Color("#2ECC71"))
+	else:
+		label_rentabilidade.remove_theme_color_override("font_color")
+
+	label_rentabilidade.text = "%+.2f%%" % rent
 	label_dia.text = "Dia %d" % Market.dia
+	
 	pass
 
 

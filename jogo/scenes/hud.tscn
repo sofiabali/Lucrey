@@ -19,17 +19,54 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 theme_override_constants/separation = 32
 
-[node name="LabelDinheiro" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=1379602662]
-unique_name_in_owner = true
+[node name="Logo" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=2879745]
+layout_mode = 2
+text = "LUCREY"
+
+[node name="GrupoDinheiro" type="VBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=507080946]
 layout_mode = 2
 
-[node name="LabelPatrimonio" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=671811843]
+[node name="TituloDinheiro" type="Label" parent="BarraSuperior/Margem/Linha/GrupoDinheiro" unique_id=1379602662]
 unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8047428, 0.8047426, 0.8047426, 1)
+theme_override_font_sizes/font_size = 12
+text = "DINHEIRO"
+
+[node name="ValorDinheiro" type="Label" parent="BarraSuperior/Margem/Linha/GrupoDinheiro" unique_id=158899059]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="GrupoPatrimonio" type="VBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=1389410618]
 layout_mode = 2
 
-[node name="LabelRentabilidade" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=37296622]
+[node name="TituloPatrimonio" type="Label" parent="BarraSuperior/Margem/Linha/GrupoPatrimonio" unique_id=671811843]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
+theme_override_font_sizes/font_size = 12
+text = "PATRIMÒNIO"
+
+[node name="ValorPatrimonio" type="Label" parent="BarraSuperior/Margem/Linha/GrupoPatrimonio" unique_id=113702653]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="GrupoRentabilidade" type="VBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=1004566597]
+layout_mode = 2
+
+[node name="TituloRentabilidade" type="Label" parent="BarraSuperior/Margem/Linha/GrupoRentabilidade" unique_id=37296622]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
+theme_override_font_sizes/font_size = 12
+text = "RENTABILIDADE"
+
+[node name="ValorRentabilidade" type="Label" parent="BarraSuperior/Margem/Linha/GrupoRentabilidade" unique_id=2077467999]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 
 [node name="LabelDia" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=2011235124]
 unique_name_in_owner = true
