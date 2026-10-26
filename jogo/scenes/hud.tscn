@@ -108,6 +108,33 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 
+[node name="Recursos" type="HBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=1772870136]
+layout_mode = 2
+
+[node name="IconeMoedas" type="TextureRect" parent="BarraSuperior/Margem/Linha/Recursos" unique_id=588716860]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("1_ahhtf")
+
+[node name="ValorMoedas" type="Label" parent="BarraSuperior/Margem/Linha/Recursos" unique_id=2141120326]
+layout_mode = 2
+
+[node name="IconeGemas" type="TextureRect" parent="BarraSuperior/Margem/Linha/Recursos" unique_id=990052316]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("1_ahhtf")
+
+[node name="ValorGemas" type="Label" parent="BarraSuperior/Margem/Linha/Recursos" unique_id=73632895]
+layout_mode = 2
+
+[node name="Notificacoes" type="Button" parent="BarraSuperior/Margem/Linha/Recursos" unique_id=1314283947]
+layout_mode = 2
+text = "Notif."
+
+[node name="BotaoConfig" type="Button" parent="BarraSuperior/Margem/Linha/Recursos" unique_id=143681178]
+layout_mode = 2
+text = "Config."
+
 [node name="LabelDia" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=2011235124]
 unique_name_in_owner = true
 layout_mode = 2

@@ -69,3 +69,39 @@ func ganhar_xp(quantidade: int) -> void:
 		
 	xp_mudou.emit()	
 	pass
+
+signal moedas_mudou
+signal gemas_mudou
+
+var moedas: int = 0
+var gemas: int = 0
+
+func ganhar_moedas(quantidade: int) -> void:
+	moedas += quantidade
+	moedas_mudou.emit()
+	
+func gastar_moedas(quantidade: int) -> bool:
+	var acao: Stock
+	if acao == null or quantidade <= 0:
+		return false
+	var custo := acao.preco * quantidade
+	if custo > moedas:
+		return false
+	moedas -= custo
+	moedas_mudou.emit()
+	return true
+	
+func ganhar_gemas(quantidade: int) -> void:
+	gemas += quantidade
+	gemas_mudou.emit()
+	
+func gastar_gemas(quantidade: int) -> bool:
+	var acao: Stock
+	if acao == null or quantidade <= 0:
+		return false
+	var custo := acao.preco * quantidade
+	if custo > gemas:
+		return false
+	gemas -= custo
+	gemas_mudou.emit()
+	return true
