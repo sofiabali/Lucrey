@@ -1,7 +1,10 @@
 extends Node
-## Autoload "GameState": dinheiro e carteira do jogador.
+## Autoload "GameState": dinheiro, carteira, XP e recursos do jogador.
 
 signal dinheiro_mudou(novo_valor: float)
+signal xp_mudou
+signal moedas_mudou
+signal gemas_mudou
 
 const DINHEIRO_INICIAL := 1000.0
 
@@ -10,6 +13,13 @@ var dinheiro: float = DINHEIRO_INICIAL
 ## ticker -> quantidade de ações
 var carteira: Dictionary = {}
 
+var nivel: int = 1
+var xp: int = 0
+var moedas: int = 0
+var gemas: int = 0
+
+
+# --- Ações -----------------------------------------------------------
 
 func comprar(ticker: String, quantidade: int) -> bool:
 	var acao: Stock = Market.buscar(ticker)
@@ -48,60 +58,39 @@ func patrimonio() -> float:
 
 
 func rentabilidade() -> float:
-	# Em %, em relação ao dinheiro inicial (o "+24,35%" do seu protótipo).
+	# Em %, em relação ao dinheiro inicial.
 	return (patrimonio() / DINHEIRO_INICIAL - 1.0) * 100.0
 
-signal xp_mudou
 
-var nivel: int = 1
-var xp: int = 0
-
+# --- XP e nível ------------------------------------------------------
 
 func xp_para_proximo_nivel() -> int:
 	return nivel * 250
 
+
 func ganhar_xp(quantidade: int) -> void:
 	xp += quantidade
-	
 	while xp >= xp_para_proximo_nivel():
 		xp -= xp_para_proximo_nivel()
 		nivel += 1
-		
-	xp_mudou.emit()	
-	pass
+	xp_mudou.emit()
 
-signal moedas_mudou
-signal gemas_mudou
 
-var moedas: int = 0
-var gemas: int = 0
+# --- Moedas e gemas --------------------------------------------------
 
 func ganhar_moedas(quantidade: int) -> void:
 	moedas += quantidade
 	moedas_mudou.emit()
-	
+
+
 func gastar_moedas(quantidade: int) -> bool:
-	var acao: Stock
-	if acao == null or quantidade <= 0:
+	if quantidade <= 0 or quantidade > moedas:
 		return false
-	var custo := acao.preco * quantidade
-	if custo > moedas:
-		return false
-	moedas -= custo
+	moedas -= quantidade
 	moedas_mudou.emit()
 	return true
-	
+
+
 func ganhar_gemas(quantidade: int) -> void:
 	gemas += quantidade
 	gemas_mudou.emit()
-	
-func gastar_gemas(quantidade: int) -> bool:
-	var acao: Stock
-	if acao == null or quantidade <= 0:
-		return false
-	var custo := acao.preco * quantidade
-	if custo > gemas:
-		return false
-	gemas -= custo
-	gemas_mudou.emit()
-	return true
