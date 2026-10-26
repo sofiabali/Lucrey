@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://c40na8vy7cyai"]
+
+[ext_resource type="Script" uid="uid://ddl11ule6tys2" path="res://scripts/painel_missao.gd" id="1_jxnj4"]
+
+[node name="PainelMissao" type="Node2D" unique_id=2061540500]
+
+[node name="PainelMissao" type="PanelContainer" parent="." unique_id=77605273]
+offset_right = 24.0
+offset_bottom = 16.0
+theme_type_variation = &"Cartao"
+script = ExtResource("1_jxnj4")
+
+[node name="Conteudo" type="VBoxContainer" parent="PainelMissao" unique_id=40389205]
+layout_mode = 2
+
+[node name="Cabecalho" type="Label" parent="PainelMissao/Conteudo" unique_id=1742764303]
+layout_mode = 2
+theme_type_variation = &"TituloPequeno"
+text = "MISSÃO ATIVA"
+
+[node name="LabelTituloMissao" type="Label" parent="PainelMissao/Conteudo" unique_id=681251325]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ValorGrande"
+
+[node name="LabelDescricao" type="Label" parent="PainelMissao/Conteudo" unique_id=919961332]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="LinhaProgresso" type="HBoxContainer" parent="PainelMissao/Conteudo" unique_id=716565823]
+layout_mode = 2
+
+[node name="Rotulo" type="Label" parent="PainelMissao/Conteudo/LinhaProgresso" unique_id=805186144]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TituloPequeno"
+text = "PROGRESSO"
+
+[node name="LabelProgresso" type="Label" parent="PainelMissao/Conteudo/LinhaProgresso" unique_id=1362217613]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BarraMissao" type="ProgressBar" parent="PainelMissao/Conteudo" unique_id=1851743054]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+show_percentage = false
+
+[node name="LabelRecompensa" type="Label" parent="PainelMissao/Conteudo" unique_id=306671866]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BotaoVerMissoes" type="Button" parent="PainelMissao/Conteudo" unique_id=501239105]
+unique_name_in_owner = true
+layout_mode = 2
+text = "VER MISSÕES"

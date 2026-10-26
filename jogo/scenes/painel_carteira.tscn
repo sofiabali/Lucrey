@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://d15mhsj7bbyx4"]
+
+[ext_resource type="Script" uid="uid://yos1wfgtv7ue" path="res://scripts/painel_carteira.gd" id="1_s85qp"]
+[ext_resource type="Script" uid="uid://0gdcim8au36y" path="res://scripts/grafico_pizza.gd" id="2_llhpv"]
+
+[node name="PainelCarteira" type="Node2D" unique_id=152426047]
+
+[node name="PainelCarteira" type="PanelContainer" parent="." unique_id=2058429931]
+offset_right = 24.0
+offset_bottom = 16.0
+theme_type_variation = &"Cartao"
+script = ExtResource("1_s85qp")
+
+[node name="Conteudo" type="VBoxContainer" parent="PainelCarteira" unique_id=442000850]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="PainelCarteira/Conteudo" unique_id=271631400]
+layout_mode = 2
+theme_type_variation = &"TituloPequeno"
+text = "MINHA CARTEIRA"
+
+[node name="Grafico" type="Control" parent="PainelCarteira/Conteudo" unique_id=1935751268]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("2_llhpv")
+
+[node name="LabelTotal" type="Label" parent="PainelCarteira/Conteudo/Grafico" unique_id=2118303617]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Legenda" type="VBoxContainer" parent="PainelCarteira/Conteudo" unique_id=1033042303]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BotaoVerCarteira" type="Button" parent="PainelCarteira/Conteudo" unique_id=579423211]
+unique_name_in_owner = true
+layout_mode = 2
+text = "VER CARTEIRA"

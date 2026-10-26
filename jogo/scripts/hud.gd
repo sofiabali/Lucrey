@@ -1,5 +1,5 @@
 extends CanvasLayer
-## HUD: barra superior (dinheiro, patrimônio, rentabilidade, XP, recursos).
+## HUD: barra superior, painéis laterais, botão Investir e barra inferior.
 
 const COR_POSITIVA := Color(0.18, 0.8, 0.44)
 const COR_NEGATIVA := Color.CRIMSON
@@ -16,12 +16,16 @@ const COR_NEGATIVA := Color.CRIMSON
 @onready var botao_avancar: Button = %BotaoAvancar
 @onready var botao_notificacoes: Button = %Notificacoes
 @onready var botao_config: Button = %BotaoConfig
+@onready var botao_investir: Button = %BotaoInvestir
+@onready var barra_inferior: BarraInferior = %BarraInferior
 
 
 func _ready() -> void:
 	botao_avancar.pressed.connect(_on_botao_avancar_pressed)
 	botao_notificacoes.pressed.connect(_on_botao_notificacoes_pressed)
 	botao_config.pressed.connect(_on_botao_config_pressed)
+	botao_investir.pressed.connect(_on_botao_investir_pressed)
+	barra_inferior.aba_selecionada.connect(_on_aba_selecionada)
 
 	GameState.dinheiro_mudou.connect(_on_dinheiro_mudou)
 	GameState.xp_mudou.connect(_atualizar_tudo)
@@ -69,6 +73,14 @@ func _on_botao_notificacoes_pressed() -> void:
 
 func _on_botao_config_pressed() -> void:
 	print("Configurações abertas")
+
+
+func _on_botao_investir_pressed() -> void:
+	print("Investir")
+
+
+func _on_aba_selecionada(nome: String) -> void:
+	print("Aba: ", nome)
 
 
 func _on_dinheiro_mudou(_novo_valor: float) -> void:

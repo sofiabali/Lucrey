@@ -22,12 +22,15 @@ Market="*uid://d2yqdylowmveo"
 
 [display]
 
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [gui]
 
-theme/custom="uid://b2fm4ln5os0ra"
+theme/custom="res://assets/lucrey_theme.tres"
 
 [input]
 
@@ -66,3 +69,4 @@ pular={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.039215688, 0.06666667, 0.09411765, 1)
