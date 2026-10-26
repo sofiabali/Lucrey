@@ -2,14 +2,10 @@
 
 [ext_resource type="Script" uid="uid://mdcj4eth0aq4" path="res://scripts/barra_inferior.gd" id="1_63tw0"]
 
-[node name="BarraInferior" type="Node2D" unique_id=1289146083]
-
-[node name="BarraInferior" type="PanelContainer" parent="." unique_id=1994192290]
-offset_right = 24.0
-offset_bottom = 16.0
+[node name="BarraInferior" type="PanelContainer" unique_id=1185596046]
 theme_type_variation = &"Cartao"
 script = ExtResource("1_63tw0")
 
-[node name="Abas" type="HBoxContainer" parent="BarraInferior" unique_id=1285562655]
+[node name="Abas" type="HBoxContainer" parent="." unique_id=417671675]
 unique_name_in_owner = true
 layout_mode = 2

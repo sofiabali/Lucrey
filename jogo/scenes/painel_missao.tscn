@@ -2,57 +2,55 @@
 
 [ext_resource type="Script" uid="uid://ddl11ule6tys2" path="res://scripts/painel_missao.gd" id="1_jxnj4"]
 
-[node name="PainelMissao" type="Node2D" unique_id=2061540500]
-
-[node name="PainelMissao" type="PanelContainer" parent="." unique_id=77605273]
+[node name="PainelMissao" type="PanelContainer" unique_id=2098572217]
 offset_right = 24.0
 offset_bottom = 16.0
 theme_type_variation = &"Cartao"
 script = ExtResource("1_jxnj4")
 
-[node name="Conteudo" type="VBoxContainer" parent="PainelMissao" unique_id=40389205]
+[node name="Conteudo" type="VBoxContainer" parent="." unique_id=708671383]
 layout_mode = 2
 
-[node name="Cabecalho" type="Label" parent="PainelMissao/Conteudo" unique_id=1742764303]
+[node name="Cabecalho" type="Label" parent="Conteudo" unique_id=1583603191]
 layout_mode = 2
 theme_type_variation = &"TituloPequeno"
 text = "MISSÃO ATIVA"
 
-[node name="LabelTituloMissao" type="Label" parent="PainelMissao/Conteudo" unique_id=681251325]
+[node name="LabelTituloMissao" type="Label" parent="Conteudo" unique_id=646566816]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ValorGrande"
 
-[node name="LabelDescricao" type="Label" parent="PainelMissao/Conteudo" unique_id=919961332]
+[node name="LabelDescricao" type="Label" parent="Conteudo" unique_id=872861656]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 autowrap_mode = 3
 
-[node name="LinhaProgresso" type="HBoxContainer" parent="PainelMissao/Conteudo" unique_id=716565823]
+[node name="LinhaProgresso" type="HBoxContainer" parent="Conteudo" unique_id=1190554470]
 layout_mode = 2
 
-[node name="Rotulo" type="Label" parent="PainelMissao/Conteudo/LinhaProgresso" unique_id=805186144]
+[node name="Rotulo" type="Label" parent="Conteudo/LinhaProgresso" unique_id=1849650627]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"TituloPequeno"
 text = "PROGRESSO"
 
-[node name="LabelProgresso" type="Label" parent="PainelMissao/Conteudo/LinhaProgresso" unique_id=1362217613]
+[node name="LabelProgresso" type="Label" parent="Conteudo/LinhaProgresso" unique_id=758393774]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="BarraMissao" type="ProgressBar" parent="PainelMissao/Conteudo" unique_id=1851743054]
+[node name="BarraMissao" type="ProgressBar" parent="Conteudo" unique_id=178507912]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 show_percentage = false
 
-[node name="LabelRecompensa" type="Label" parent="PainelMissao/Conteudo" unique_id=306671866]
+[node name="LabelRecompensa" type="Label" parent="Conteudo" unique_id=1680072444]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="BotaoVerMissoes" type="Button" parent="PainelMissao/Conteudo" unique_id=501239105]
+[node name="BotaoVerMissoes" type="Button" parent="Conteudo" unique_id=1390503612]
 unique_name_in_owner = true
 layout_mode = 2
 text = "VER MISSÕES"

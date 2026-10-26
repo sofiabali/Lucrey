@@ -2,26 +2,24 @@
 
 [ext_resource type="Script" uid="uid://keytuwwls4h5" path="res://scripts/painel_noticias.gd" id="1_nr7ls"]
 
-[node name="PainelNoticias" type="Node2D" unique_id=644515530]
-
-[node name="PainelNoticias" type="PanelContainer" parent="." unique_id=1838923034]
+[node name="PainelNoticias" type="PanelContainer" unique_id=1684355815]
 offset_right = 24.0
 offset_bottom = 16.0
 script = ExtResource("1_nr7ls")
 
-[node name="Conteudo" type="VBoxContainer" parent="PainelNoticias" unique_id=433223837]
+[node name="Conteudo" type="VBoxContainer" parent="." unique_id=444570216]
 layout_mode = 2
 
-[node name="Titulo" type="Label" parent="PainelNoticias/Conteudo" unique_id=66840741]
+[node name="Titulo" type="Label" parent="Conteudo" unique_id=1641517767]
 layout_mode = 2
 theme_type_variation = &"TituloPequeno"
 text = "NOTÍCIAS"
 
-[node name="Lista" type="VBoxContainer" parent="PainelNoticias/Conteudo" unique_id=556194830]
+[node name="Lista" type="VBoxContainer" parent="Conteudo" unique_id=436705593]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="BotaoVerNoticias" type="Button" parent="PainelNoticias/Conteudo" unique_id=457132884]
+[node name="BotaoVerNoticias" type="Button" parent="Conteudo" unique_id=1267063565]
 unique_name_in_owner = true
 layout_mode = 2
 text = "VER TODAS"
