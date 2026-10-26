@@ -69,4 +69,4 @@ pular={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.039215688, 0.06666667, 0.09411765, 1)
+environment/defaults/default_clear_color=Color(0.4509096, 0.562273, 0.6746862, 1)

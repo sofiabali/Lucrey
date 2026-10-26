@@ -11,8 +11,11 @@
 script = ExtResource("1_047uy")
 
 [node name="Coluna" type="VBoxContainer" parent="." unique_id=1797660074]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="BarraSuperior" type="PanelContainer" parent="Coluna" unique_id=1127181464]
@@ -220,6 +223,7 @@ mouse_filter = 2
 layout_mode = 2
 
 [node name="PainelMissao" parent="Coluna/Corpo/Conteudo/Meio/ColunaEsquerda" unique_id=2061540500 instance=ExtResource("3_5pdws")]
+layout_mode = 2
 
 [node name="Espaco" type="Control" parent="Coluna/Corpo/Conteudo/Meio" unique_id=1664524355]
 layout_mode = 2
@@ -230,8 +234,10 @@ mouse_filter = 2
 layout_mode = 2
 
 [node name="PainelCarteira" parent="Coluna/Corpo/Conteudo/Meio/ColunaDireita" unique_id=152426047 instance=ExtResource("4_hd3ao")]
+layout_mode = 2
 
 [node name="PainelNoticias" parent="Coluna/Corpo/Conteudo/Meio/ColunaDireita" unique_id=644515530 instance=ExtResource("5_0i1j5")]
+layout_mode = 2
 
 [node name="EspacoDireita" type="Control" parent="Coluna/Corpo/Conteudo/Meio/ColunaDireita" unique_id=15826102]
 layout_mode = 2
@@ -245,5 +251,6 @@ layout_mode = 2
 theme_type_variation = &"BotaoGrande"
 text = "INVESTIR"
 
-[node name="BarraInferior" parent="Coluna/Corpo/Conteudo/Meio" unique_id=1289146083 instance=ExtResource("6_mphia")]
+[node name="BarraInferior" parent="Coluna/Corpo/Conteudo" unique_id=1289146083 instance=ExtResource("6_mphia")]
 unique_name_in_owner = true
+layout_mode = 2
