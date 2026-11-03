@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dfvu0f2kuqils"]
 
+[ext_resource type="Script" uid="uid://c4ob00uisepp2" path="res://scripts/tela_notificações.gd" id="1_lgywb"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvr4n"]
 bg_color = Color(0.0627451, 0.105882354, 0.14901961, 1)
 corner_radius_top_left = 20
@@ -29,52 +31,50 @@ corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
-[node name="TelaConfigurações" type="Control" unique_id=963795221]
+[node name="TelaNotificações" type="Control" unique_id=963795221]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_lgywb")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=2107003804]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 450.0
+offset_bottom = 320.0
 
-[node name="PainelConfiguracoes" type="PanelContainer" parent="CenterContainer" unique_id=886554307]
+[node name="PainelNotificaçooes" type="PanelContainer" parent="CenterContainer" unique_id=886554307]
 custom_minimum_size = Vector2(450, 320)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_uvr4n")
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PainelConfiguracoes" unique_id=25968047]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PainelNotificaçooes" unique_id=25968047]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="ConteudoConfigurações" type="VBoxContainer" parent="CenterContainer/PainelConfiguracoes/MarginContainer" unique_id=384902059]
+[node name="ConteudoNotificações" type="VBoxContainer" parent="CenterContainer/PainelNotificaçooes/MarginContainer" unique_id=384902059]
 layout_mode = 2
 
-[node name="Cabeçalho" type="HBoxContainer" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações" unique_id=1985273628]
+[node name="Cabeçalho" type="HBoxContainer" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações" unique_id=1985273628]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="titulo" type="Label" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/Cabeçalho" unique_id=1360524163]
+[node name="titulo" type="Label" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações/Cabeçalho" unique_id=1360524163]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 25
-text = "Configurações"
+text = "Notificações"
 
-[node name="Espacador" type="Control" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/Cabeçalho" unique_id=1298048436]
+[node name="Espacador" type="Control" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações/Cabeçalho" unique_id=1298048436]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BotaoFechar" type="Button" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/Cabeçalho" unique_id=336968898]
+[node name="BotaoFechar" type="Button" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações/Cabeçalho" unique_id=336968898]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(1.071974, 1.1291975, 1.093983, 1)
@@ -82,66 +82,25 @@ theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_jc82e")
 text = "X"
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações" unique_id=321858415]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações" unique_id=321858415]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 30
 
-[node name="Opções" type="VBoxContainer" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer" unique_id=1610959923]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="LinhaMusica" type="HBoxContainer" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções" unique_id=1811171977]
+[node name="ListadeNotif" type="VBoxContainer" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações/MarginContainer" unique_id=1769466976]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaMusica" unique_id=1797936248]
+[node name="Mensagemvazia" type="Label" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações/MarginContainer/ListadeNotif" unique_id=406689657]
 layout_mode = 2
-theme_override_font_sizes/font_size = 19
-text = "Musica"
+text = "Nenhuma notificação por enquanto."
+horizontal_alignment = 1
 
-[node name="Espacador" type="Control" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaMusica" unique_id=930766539]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CheckButton" type="CheckButton" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaMusica" unique_id=226209023]
-layout_mode = 2
-button_pressed = true
-
-[node name="LinhaEfeitos" type="HBoxContainer" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções" unique_id=1256839578]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaEfeitos" unique_id=22098986]
-layout_mode = 2
-theme_override_font_sizes/font_size = 19
-text = "Efeitos Sonoros"
-
-[node name="Espacador" type="Control" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaEfeitos" unique_id=277759288]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CheckButton" type="CheckButton" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaEfeitos" unique_id=595158150]
-layout_mode = 2
-button_pressed = true
-
-[node name="LinhaTela" type="HBoxContainer" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções" unique_id=955476356]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaTela" unique_id=1963683649]
-layout_mode = 2
-theme_override_font_sizes/font_size = 19
-text = "Tela Cheia"
-
-[node name="Espacador" type="Control" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaTela" unique_id=267639777]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CheckButton" type="CheckButton" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaTela" unique_id=151373476]
-layout_mode = 2
-button_pressed = true
-
-[node name="Salvar" type="Button" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações" unique_id=431762884]
+[node name="BotaoLidas" type="Button" parent="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações" unique_id=431762884]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_piblh")
-text = "SALVAR CONFIGURAÇÕES."
+text = "MARCAR TODAS COMO LIDAS."
+
+[connection signal="pressed" from="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações/Cabeçalho/BotaoFechar" to="." method="_on_botao_fechar_pressed"]
+[connection signal="pressed" from="CenterContainer/PainelNotificaçooes/MarginContainer/ConteudoNotificações/BotaoLidas" to="." method="_on_botao_lidas_pressed"]

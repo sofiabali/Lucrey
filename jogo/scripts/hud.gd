@@ -67,12 +67,32 @@ func _on_botao_avancar_pressed() -> void:
 	Market.avancar_dia()
 
 
+
 func _on_botao_notificacoes_pressed() -> void:
-	print("Notificações abertas")
+	var janela = $"TelaNotificações"
+	var painel = janela.get_node("CenterContainer")
+
+	painel.position = botao_notificacoes.global_position - janela.global_position + Vector2(
+		botao_notificacoes.size.x - painel.size.x,
+		botao_notificacoes.size.y + 8
+	)
+
+	janela.show()
+
+
 
 
 func _on_botao_config_pressed() -> void:
-	print("Configurações abertas")
+	var janela = $"TelaConfigurações"
+	var painel = janela.get_node("CenterContainer")
+
+	painel.position = botao_config.global_position - janela.global_position + Vector2(
+		botao_config.size.x - painel.size.x,
+		botao_config.size.y + 8
+	)
+
+	janela.show()
+
 
 
 func _on_botao_investir_pressed() -> void:

@@ -2,13 +2,18 @@
 
 [ext_resource type="Script" uid="uid://r1i62vnmdswc" path="res://scripts/hud.gd" id="1_047uy"]
 [ext_resource type="Texture2D" uid="uid://7smdca4rs6qc" path="res://icon.svg" id="1_ahhtf"]
+[ext_resource type="PackedScene" uid="uid://dfvu0f2kuqils" path="res://scenes/tela_notificações.tscn" id="2_hd3ao"]
 [ext_resource type="PackedScene" uid="uid://c40na8vy7cyai" path="res://scenes/painel_missao.tscn" id="3_5pdws"]
 [ext_resource type="PackedScene" uid="uid://d15mhsj7bbyx4" path="res://scenes/painel_carteira.tscn" id="4_hd3ao"]
 [ext_resource type="PackedScene" uid="uid://br61i031yf35h" path="res://scenes/painel_noticias.tscn" id="5_0i1j5"]
 [ext_resource type="PackedScene" uid="uid://cu0l4j3dh2iay" path="res://scenes/barra_inferior.tscn" id="6_mphia"]
+[ext_resource type="PackedScene" uid="uid://dthu7ytxn0aro" path="res://scenes/tela_configurações.tscn" id="8_0i1j5"]
 
 [node name="HUD" type="CanvasLayer" unique_id=1770219081]
 script = ExtResource("1_047uy")
+
+[node name="TelaNotificações" parent="." unique_id=963795221 instance=ExtResource("2_hd3ao")]
+visible = false
 
 [node name="Coluna" type="VBoxContainer" parent="." unique_id=1797660074]
 anchors_preset = 15
@@ -254,3 +259,6 @@ text = "INVESTIR"
 [node name="BarraInferior" parent="Coluna/Corpo/Conteudo" unique_id=1289146083 instance=ExtResource("6_mphia")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="TelaConfigurações" parent="." unique_id=272138290 instance=ExtResource("8_0i1j5")]
+visible = false

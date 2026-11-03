@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dthu7ytxn0aro"]
 
+[ext_resource type="Script" uid="uid://bw0dqjuw26hgo" path="res://scripts/tela_configurações.gd" id="1_jc82e"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvr4n"]
 bg_color = Color(0.0627451, 0.105882354, 0.14901961, 1)
 corner_radius_top_left = 20
@@ -36,14 +38,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jc82e")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=2107003804]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 450.0
+offset_bottom = 320.0
 
 [node name="PainelConfiguracoes" type="PanelContainer" parent="CenterContainer" unique_id=886554307]
 custom_minimum_size = Vector2(450, 320)
@@ -99,7 +99,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaMusica" unique_id=1797936248]
 layout_mode = 2
 theme_override_font_sizes/font_size = 19
-text = "Musica"
+text = "Música"
 
 [node name="Espacador" type="Control" parent="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/MarginContainer/Opções/LinhaMusica" unique_id=930766539]
 layout_mode = 2
@@ -145,3 +145,6 @@ button_pressed = true
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_piblh")
 text = "SALVAR CONFIGURAÇÕES."
+
+[connection signal="pressed" from="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/Cabeçalho/BotaoFechar" to="." method="_on_botao_fechar_pressed"]
+[connection signal="pressed" from="CenterContainer/PainelConfiguracoes/MarginContainer/ConteudoConfigurações/Salvar" to="." method="_on_salvar_pressed"]
