@@ -1,11 +1,24 @@
 [gd_scene format=3 uid="uid://b03kw50siyu3c"]
 
+[ext_resource type="Script" uid="uid://s2ekog3ob4w2" path="res://scripts/tela_carteira.gd" id="1_dqk2f"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cn0js"]
 bg_color = Color(0.06666667, 0.10980392, 0.15294118, 1)
 corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jc82e"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.12156863, 0.47843137, 0.22745098, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="TelaCarteira" type="Control" unique_id=177886893]
 layout_mode = 3
@@ -14,6 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_dqk2f")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1242582040]
 visible = false
@@ -60,13 +74,13 @@ theme_override_constants/line_spacing = 3
 theme_override_font_sizes/font_size = 38
 text = "Minha Carteira"
 
-[node name="BotaoVoltar" type="Button" parent="Centralizador/FundoCarteira/JanelaCarteira/MargemCabeçalho/Cabeçalho" unique_id=610987148]
-custom_minimum_size = Vector2(100, 25)
+[node name="BotaoVoltar" type="Button" parent="Centralizador/FundoCarteira/JanelaCarteira/MargemCabeçalho/Cabeçalho" unique_id=1861447948]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(1.071974, 1.1291975, 1.093983, 1)
 theme_override_font_sizes/font_size = 18
-text = "← VOLTAR"
+theme_override_styles/normal = SubResource("StyleBoxFlat_jc82e")
+text = "VOLTAR"
 
 [node name="ConteudoCarteira" type="VBoxContainer" parent="Centralizador/FundoCarteira/JanelaCarteira" unique_id=1292729090]
 layout_mode = 2
@@ -256,3 +270,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "	+0,00%"
+
+[connection signal="pressed" from="Centralizador/FundoCarteira/JanelaCarteira/MargemCabeçalho/Cabeçalho/BotaoVoltar" to="." method="_on_botao_voltar_pressed"]

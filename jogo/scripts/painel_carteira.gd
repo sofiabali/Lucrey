@@ -1,5 +1,7 @@
+class_name PainelCarteira
 extends PanelContainer
 ## Painel "Minha Carteira": rosca com a divisão do patrimônio + legenda.
+signal ver_carteira_pedido
 
 const CORES := [
 	Color("#3B82F6"), Color("#22C55E"), Color("#F97316"),
@@ -10,7 +12,6 @@ const COR_CAIXA := Color("#64748B")
 @onready var grafico: GraficoPizza = %Grafico
 @onready var label_total: Label = %LabelTotal
 @onready var legenda: VBoxContainer = %Legenda
-@onready var botao_ver: Button = %BotaoVerCarteira
 
 
 func _ready() -> void:
@@ -18,7 +19,6 @@ func _ready() -> void:
 	# então usamos uma função anônima (lambda) que o descarta.
 	GameState.dinheiro_mudou.connect(func(_v: float) -> void: _atualizar())
 	Market.dia_avancou.connect(func(_d: int) -> void: _atualizar())
-	botao_ver.pressed.connect(func() -> void: print("Ver carteira"))
 	_atualizar()
 
 
@@ -70,3 +70,7 @@ func _criar_linha(nome: String, pct: float, cor: Color) -> void:
 	linha.add_child(l_nome)
 	linha.add_child(l_pct)
 	legenda.add_child(linha)
+
+
+func _on_botao_ver_carteira_pressed() -> void:
+	ver_carteira_pedido.emit()

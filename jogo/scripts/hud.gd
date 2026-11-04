@@ -16,6 +16,7 @@ const COR_NEGATIVA := Color.CRIMSON
 @onready var botao_avancar: Button = %BotaoAvancar
 @onready var botao_notificacoes: Button = %Notificacoes
 @onready var botao_config: Button = %BotaoConfig
+@onready var painel_carteira: PainelCarteira = %PainelCarteira
 @onready var botao_investir: Button = %BotaoInvestir
 @onready var barra_inferior: BarraInferior = %BarraInferior
 
@@ -24,6 +25,7 @@ func _ready() -> void:
 	botao_avancar.pressed.connect(_on_botao_avancar_pressed)
 	botao_notificacoes.pressed.connect(_on_botao_notificacoes_pressed)
 	botao_config.pressed.connect(_on_botao_config_pressed)
+	painel_carteira.ver_carteira_pedido.connect(_on_botao_carteira_pressed)
 	botao_investir.pressed.connect(_on_botao_investir_pressed)
 	barra_inferior.aba_selecionada.connect(_on_aba_selecionada)
 
@@ -68,6 +70,7 @@ func _on_botao_avancar_pressed() -> void:
 
 
 
+#Tela de notif
 func _on_botao_notificacoes_pressed() -> void:
 	var janela = $"TelaNotificações"
 	var painel = janela.get_node("CenterContainer")
@@ -79,9 +82,7 @@ func _on_botao_notificacoes_pressed() -> void:
 
 	janela.show()
 
-
-
-
+# Tela de config
 func _on_botao_config_pressed() -> void:
 	var janela = $"TelaConfigurações"
 	var painel = janela.get_node("CenterContainer")
@@ -92,6 +93,10 @@ func _on_botao_config_pressed() -> void:
 	)
 
 	janela.show()
+	
+# Tela da carteira
+func _on_botao_carteira_pressed() -> void:
+	$TelaCarteira.show()
 
 
 

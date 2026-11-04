@@ -6,14 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://c40na8vy7cyai" path="res://scenes/painel_missao.tscn" id="3_5pdws"]
 [ext_resource type="PackedScene" uid="uid://d15mhsj7bbyx4" path="res://scenes/painel_carteira.tscn" id="4_hd3ao"]
 [ext_resource type="PackedScene" uid="uid://br61i031yf35h" path="res://scenes/painel_noticias.tscn" id="5_0i1j5"]
+[ext_resource type="PackedScene" uid="uid://b03kw50siyu3c" path="res://scenes/tela_carteira.tscn" id="6_0i1j5"]
 [ext_resource type="PackedScene" uid="uid://cu0l4j3dh2iay" path="res://scenes/barra_inferior.tscn" id="6_mphia"]
 [ext_resource type="PackedScene" uid="uid://dthu7ytxn0aro" path="res://scenes/tela_configurações.tscn" id="8_0i1j5"]
 
 [node name="HUD" type="CanvasLayer" unique_id=1770219081]
 script = ExtResource("1_047uy")
-
-[node name="TelaNotificações" parent="." unique_id=963795221 instance=ExtResource("2_hd3ao")]
-visible = false
 
 [node name="Coluna" type="VBoxContainer" parent="." unique_id=1797660074]
 anchors_preset = 15
@@ -44,61 +42,61 @@ layout_mode = 2
 theme_type_variation = &"Logo"
 text = "LUCREY"
 
-[node name="PanelContainer" type="PanelContainer" parent="Coluna/BarraSuperior/Margem/Linha" unique_id=49682176]
+[node name="Jogador" type="PanelContainer" parent="Coluna/BarraSuperior/Margem/Linha" unique_id=49682176]
 layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"Cartao"
 
-[node name="CartaoInvestidor" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer" unique_id=2128729010]
+[node name="CartaoInvestidor" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Jogador" unique_id=2128729010]
 layout_mode = 2
 
-[node name="Avatar" type="TextureRect" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer/CartaoInvestidor" unique_id=856102883]
+[node name="Avatar" type="TextureRect" parent="Coluna/BarraSuperior/Margem/Linha/Jogador/CartaoInvestidor" unique_id=856102883]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("1_ahhtf")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Info" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer/CartaoInvestidor" unique_id=349676995]
+[node name="Info" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Jogador/CartaoInvestidor" unique_id=349676995]
 layout_mode = 2
 
-[node name="LabelTitulo" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer/CartaoInvestidor/Info" unique_id=1409416881]
+[node name="LabelTitulo" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Jogador/CartaoInvestidor/Info" unique_id=1409416881]
 layout_mode = 2
 text = "Investidor Iniciante"
 
-[node name="LinhaNivel" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer/CartaoInvestidor/Info" unique_id=663400104]
+[node name="LinhaNivel" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Jogador/CartaoInvestidor/Info" unique_id=663400104]
 layout_mode = 2
 
-[node name="LabelNivel" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer/CartaoInvestidor/Info/LinhaNivel" unique_id=741116333]
+[node name="LabelNivel" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Jogador/CartaoInvestidor/Info/LinhaNivel" unique_id=741116333]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "NÍVEL 1"
 horizontal_alignment = 2
 
-[node name="LabelXp" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer/CartaoInvestidor/Info/LinhaNivel" unique_id=132505563]
+[node name="LabelXp" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Jogador/CartaoInvestidor/Info/LinhaNivel" unique_id=132505563]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0 / 250 XP"
 
-[node name="BarraXp" type="ProgressBar" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer/CartaoInvestidor/Info" unique_id=1877057913]
+[node name="BarraXp" type="ProgressBar" parent="Coluna/BarraSuperior/Margem/Linha/Jogador/CartaoInvestidor/Info" unique_id=1877057913]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 10)
 layout_mode = 2
 show_percentage = false
 
-[node name="PanelContainer2" type="PanelContainer" parent="Coluna/BarraSuperior/Margem/Linha" unique_id=1568081354]
+[node name="Dinheiro" type="PanelContainer" parent="Coluna/BarraSuperior/Margem/Linha" unique_id=1568081354]
 layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"Cartao"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2" unique_id=1191046675]
+[node name="HBoxContainer" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro" unique_id=1191046675]
 layout_mode = 2
 
-[node name="GrupoDinheiro" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer" unique_id=507080946]
+[node name="GrupoDinheiro" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer" unique_id=507080946]
 layout_mode = 2
 
-[node name="TituloDinheiro" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer/GrupoDinheiro" unique_id=1379602662]
+[node name="TituloDinheiro" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer/GrupoDinheiro" unique_id=1379602662]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TituloPequeno"
@@ -106,16 +104,16 @@ theme_override_colors/font_color = Color(0.8047428, 0.8047426, 0.8047426, 1)
 theme_override_font_sizes/font_size = 12
 text = "DINHEIRO"
 
-[node name="ValorDinheiro" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer/GrupoDinheiro" unique_id=158899059]
+[node name="ValorDinheiro" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer/GrupoDinheiro" unique_id=158899059]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ValorGrande"
 theme_override_font_sizes/font_size = 20
 
-[node name="GrupoPatrimonio" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer" unique_id=1389410618]
+[node name="GrupoPatrimonio" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer" unique_id=1389410618]
 layout_mode = 2
 
-[node name="TituloPatrimonio" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer/GrupoPatrimonio" unique_id=671811843]
+[node name="TituloPatrimonio" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer/GrupoPatrimonio" unique_id=671811843]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TituloPequeno"
@@ -123,16 +121,16 @@ theme_override_colors/font_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
 theme_override_font_sizes/font_size = 12
 text = "PATRIMÔNIO"
 
-[node name="ValorPatrimonio" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer/GrupoPatrimonio" unique_id=113702653]
+[node name="ValorPatrimonio" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer/GrupoPatrimonio" unique_id=113702653]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ValorGrande"
 theme_override_font_sizes/font_size = 20
 
-[node name="GrupoRentabilidade" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer" unique_id=1004566597]
+[node name="GrupoRentabilidade" type="VBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer" unique_id=1004566597]
 layout_mode = 2
 
-[node name="TituloRentabilidade" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer/GrupoRentabilidade" unique_id=37296622]
+[node name="TituloRentabilidade" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer/GrupoRentabilidade" unique_id=37296622]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TituloPequeno"
@@ -140,21 +138,21 @@ theme_override_colors/font_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
 theme_override_font_sizes/font_size = 12
 text = "RENTABILIDADE"
 
-[node name="ValorRentabilidade" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer2/HBoxContainer/GrupoRentabilidade" unique_id=2077467999]
+[node name="ValorRentabilidade" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Dinheiro/HBoxContainer/GrupoRentabilidade" unique_id=2077467999]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ValorGrande"
 theme_override_font_sizes/font_size = 20
 
-[node name="PanelContainer3" type="PanelContainer" parent="Coluna/BarraSuperior/Margem/Linha" unique_id=19136378]
+[node name="Recursos" type="PanelContainer" parent="Coluna/BarraSuperior/Margem/Linha" unique_id=19136378]
 layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"Cartao"
 
-[node name="Recursos" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer3" unique_id=1772870136]
+[node name="Recursos" type="HBoxContainer" parent="Coluna/BarraSuperior/Margem/Linha/Recursos" unique_id=1772870136]
 layout_mode = 2
 
-[node name="IconeMoedas" type="TextureRect" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer3/Recursos" unique_id=588716860]
+[node name="IconeMoedas" type="TextureRect" parent="Coluna/BarraSuperior/Margem/Linha/Recursos/Recursos" unique_id=588716860]
 self_modulate = Color(0.9607843, 0.77254903, 0.25882354, 1)
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
@@ -162,12 +160,12 @@ texture = ExtResource("1_ahhtf")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ValorMoedas" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer3/Recursos" unique_id=2141120326]
+[node name="ValorMoedas" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Recursos/Recursos" unique_id=2141120326]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ValorGrande"
 
-[node name="IconeGemas" type="TextureRect" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer3/Recursos" unique_id=990052316]
+[node name="IconeGemas" type="TextureRect" parent="Coluna/BarraSuperior/Margem/Linha/Recursos/Recursos" unique_id=990052316]
 self_modulate = Color(0.30980393, 0.7647059, 0.96862745, 1)
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
@@ -175,18 +173,18 @@ texture = ExtResource("1_ahhtf")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ValorGemas" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer3/Recursos" unique_id=73632895]
+[node name="ValorGemas" type="Label" parent="Coluna/BarraSuperior/Margem/Linha/Recursos/Recursos" unique_id=73632895]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ValorGrande"
 
-[node name="Notificacoes" type="Button" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer3/Recursos" unique_id=1314283947]
+[node name="Notificacoes" type="Button" parent="Coluna/BarraSuperior/Margem/Linha/Recursos/Recursos" unique_id=1314283947]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"BotaoIcone"
 text = "Notif."
 
-[node name="BotaoConfig" type="Button" parent="Coluna/BarraSuperior/Margem/Linha/PanelContainer3/Recursos" unique_id=143681178]
+[node name="BotaoConfig" type="Button" parent="Coluna/BarraSuperior/Margem/Linha/Recursos/Recursos" unique_id=143681178]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"BotaoIcone"
@@ -239,6 +237,7 @@ mouse_filter = 2
 layout_mode = 2
 
 [node name="PainelCarteira" parent="Coluna/Corpo/Conteudo/Meio/ColunaDireita" unique_id=152426047 instance=ExtResource("4_hd3ao")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="PainelNoticias" parent="Coluna/Corpo/Conteudo/Meio/ColunaDireita" unique_id=644515530 instance=ExtResource("5_0i1j5")]
@@ -260,5 +259,11 @@ text = "INVESTIR"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="TelaNotificações" parent="." unique_id=963795221 instance=ExtResource("2_hd3ao")]
+visible = false
+
 [node name="TelaConfigurações" parent="." unique_id=272138290 instance=ExtResource("8_0i1j5")]
+visible = false
+
+[node name="TelaCarteira" parent="." unique_id=177886893 instance=ExtResource("6_0i1j5")]
 visible = false

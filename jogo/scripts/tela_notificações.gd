@@ -9,8 +9,3 @@ func _ready() -> void:
 
 func _on_botao_fechar_pressed() -> void:
 	hide() # Replace with function body.
-
-
-func _on_botao_lidas_pressed() -> void:
-	print("Notificações marcadas como lidas!")
-	hide()# Replace with function body.

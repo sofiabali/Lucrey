@@ -4,7 +4,7 @@ extends PanelContainer
 
 signal aba_selecionada(nome: String)
 
-const ABAS := ["Mapa", "Carteira", "Cotações", "Notícias", "Missões", "Conquistas", "Loja"]
+const ABAS := ["Mapa", "Cotações", "Notícias", "Missões", "Conquistas", "Loja"]
 
 @onready var abas: HBoxContainer = %Abas
 
