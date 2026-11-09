@@ -1,6 +1,8 @@
 class_name PainelCarteira
 extends PanelContainer
 ## Painel "Minha Carteira": rosca com a divisão do patrimônio + legenda.
+
+## Emitido quando o jogador clica em VER CARTEIRA (o HUD abre a tela cheia).
 signal ver_carteira_pedido
 
 const CORES := [

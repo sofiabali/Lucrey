@@ -9,17 +9,6 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jc82e"]
-content_margin_left = 16.0
-content_margin_top = 8.0
-content_margin_right = 16.0
-content_margin_bottom = 8.0
-bg_color = Color(0.12156863, 0.47843137, 0.22745098, 0)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [node name="TelaCarteira" type="Control" unique_id=177886893]
 layout_mode = 3
 anchors_preset = 15
@@ -30,14 +19,13 @@ grow_vertical = 2
 script = ExtResource("1_dqk2f")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1242582040]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0941251, 0.15074348, 0.29068744, 1)
+color = Color(0.02, 0.04, 0.07, 0.88)
 
 [node name="Centralizador" type="CenterContainer" parent="." unique_id=1986814774]
 layout_mode = 1
@@ -74,12 +62,13 @@ theme_override_constants/line_spacing = 3
 theme_override_font_sizes/font_size = 38
 text = "Minha Carteira"
 
-[node name="BotaoVoltar" type="Button" parent="Centralizador/FundoCarteira/JanelaCarteira/MargemCabeçalho/Cabeçalho" unique_id=1861447948]
+[node name="BotaoVoltar" type="Button" parent="Centralizador/FundoCarteira/JanelaCarteira/MargemCabeçalho/Cabeçalho" unique_id=610987148]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-size_flags_horizontal = 8
-theme_override_colors/font_color = Color(1.071974, 1.1291975, 1.093983, 1)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_jc82e")
 text = "VOLTAR"
 
 [node name="ConteudoCarteira" type="VBoxContainer" parent="Centralizador/FundoCarteira/JanelaCarteira" unique_id=1292729090]
@@ -115,7 +104,8 @@ layout_mode = 2
 text = "PATRIMÔNIO TOTAL
 "
 
-[node name="Valorpatrimonio" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/ResumoFinanceiro/CartãoPatrimonio/MarginContainer/InformaçõesPatrimonio" unique_id=1796361461]
+[node name="ValorPatrimonioTotal" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/ResumoFinanceiro/CartãoPatrimonio/MarginContainer/InformaçõesPatrimonio" unique_id=1796361461]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "R$ 10.000,00"
@@ -141,7 +131,8 @@ layout_mode = 2
 text = "INVESTIDO
 "
 
-[node name="Valorpatrimonio" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/ResumoFinanceiro/CartãoInvestido/MarginContainer/InformaçõesPatrimonio" unique_id=1364924051]
+[node name="ValorInvestido" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/ResumoFinanceiro/CartãoInvestido/MarginContainer/InformaçõesPatrimonio" unique_id=1364924051]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "R$ 0,00"
@@ -167,7 +158,8 @@ layout_mode = 2
 text = "DISPONÍVEL
 "
 
-[node name="Valorpatrimonio" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/ResumoFinanceiro/CartãoDisponivel/MarginContainer/InformaçõesPatrimonio" unique_id=1394803047]
+[node name="ValorDisponivel" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/ResumoFinanceiro/CartãoDisponivel/MarginContainer/InformaçõesPatrimonio" unique_id=1394803047]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "R$ 10.000,00"
@@ -196,79 +188,48 @@ custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
 [node name="MensagemCarteiraVazia" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos" unique_id=1571301932]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "Você ainda não possui ações. Comece a investir!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ListaAções" type="VBoxContainer" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos" unique_id=221305066]
+[node name="ListaAcoes" type="VBoxContainer" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos" unique_id=221305066]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CabeçalhoAções" type="HBoxContainer" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções" unique_id=1359554935]
+[node name="CabeçalhoAções" type="HBoxContainer" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAcoes" unique_id=1359554935]
 layout_mode = 2
 
-[node name="colunaempresa" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/CabeçalhoAções" unique_id=782385895]
+[node name="colunaempresa" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAcoes/CabeçalhoAções" unique_id=782385895]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 17
 text = "EMPRESA"
 
-[node name="ColunaQuantidade" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/CabeçalhoAções" unique_id=1292597131]
+[node name="ColunaQuantidade" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAcoes/CabeçalhoAções" unique_id=1292597131]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 17
 text = "QUANTIDADE"
 
-[node name="ColunaPreço" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/CabeçalhoAções" unique_id=423229800]
+[node name="ColunaPreço" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAcoes/CabeçalhoAções" unique_id=423229800]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 17
 text = "PREÇO ATUAL"
 
-[node name="ColunaTotal" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/CabeçalhoAções" unique_id=1431067347]
+[node name="ColunaTotal" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAcoes/CabeçalhoAções" unique_id=1431067347]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 17
 text = "VALOR TOTAL"
 
-[node name="ColunaVariação" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/CabeçalhoAções" unique_id=1529814656]
+[node name="ColunaVariação" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAcoes/CabeçalhoAções" unique_id=1529814656]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 17
 text = "VARIAÇÃO"
-
-[node name="linhaaçoes" type="HBoxContainer" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções" unique_id=653972178]
-layout_mode = 2
-
-[node name="NomeEmpresa" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/linhaaçoes" unique_id=452450265]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
-text = "Empresa Exemplo"
-
-[node name="QuantidadeAçoes" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/linhaaçoes" unique_id=841944288]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
-text = "10 ações"
-
-[node name="PreçoAção" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/linhaaçoes" unique_id=240530629]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
-text = "R$ 50,00"
-
-[node name="ValorTotal" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/linhaaçoes" unique_id=302672815]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
-text = "R$ 500,00"
-
-[node name="Lucro_Prejuizo" type="Label" parent="Centralizador/FundoCarteira/JanelaCarteira/ConteudoCarteira/MarginContainer2/PainelInvestimentos/ListaAções/linhaaçoes" unique_id=1964898112]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
-text = "	+0,00%"
 
 [connection signal="pressed" from="Centralizador/FundoCarteira/JanelaCarteira/MargemCabeçalho/Cabeçalho/BotaoVoltar" to="." method="_on_botao_voltar_pressed"]

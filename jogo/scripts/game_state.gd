@@ -33,6 +33,8 @@ var dinheiro: float = DINHEIRO_INICIAL
 
 ## ticker -> quantidade de ações
 var carteira: Dictionary = {}
+## ticker -> R$ gasto na posição atual (serve para calcular lucro/prejuízo)
+var custo_total: Dictionary = {}
 
 var nivel: int = 1
 var xp: int = 0
@@ -52,6 +54,7 @@ func comprar(ticker: String, quantidade: int) -> bool:
 		return false
 	dinheiro -= custo
 	carteira[ticker] = carteira.get(ticker, 0) + quantidade
+	custo_total[ticker] = custo_total.get(ticker, 0.0) + custo
 	_verificar_missao()
 	dinheiro_mudou.emit(dinheiro)
 	return true
@@ -63,7 +66,13 @@ func vender(ticker: String, quantidade: int) -> bool:
 		return false
 	if carteira.get(ticker, 0) < quantidade:
 		return false
+	# Tira da posição a parte proporcional do custo que foi vendida
+	var qtd_antes: int = carteira[ticker]
+	var custo_atual: float = custo_total.get(ticker, 0.0)
+	custo_total[ticker] = custo_atual - custo_atual * quantidade / qtd_antes
 	carteira[ticker] -= quantidade
+	if carteira[ticker] == 0:
+		custo_total.erase(ticker)
 	dinheiro += acao.preco * quantidade
 	dinheiro_mudou.emit(dinheiro)
 	return true
@@ -74,6 +83,17 @@ func valor_da_carteira() -> float:
 	for ticker in carteira:
 		total += Market.buscar(ticker).preco * carteira[ticker]
 	return total
+
+
+func custo_da_posicao(ticker: String) -> float:
+	return custo_total.get(ticker, 0.0)
+
+
+## Quanto a posição vale hoje menos o que foi gasto nela.
+func lucro_da_posicao(ticker: String) -> float:
+	var acao: Stock = Market.buscar(ticker)
+	var qtd: int = carteira.get(ticker, 0)
+	return acao.preco * qtd - custo_da_posicao(ticker)
 
 
 func patrimonio() -> float:
