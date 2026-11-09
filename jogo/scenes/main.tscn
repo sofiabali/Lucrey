@@ -2,8 +2,48 @@
 
 [ext_resource type="PackedScene" uid="uid://cvgb8dg7x0g30" path="res://scenes/hud.tscn" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://bmtft8trxy4ms" path="res://scripts/main.gd" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://djijyh5quflht" path="res://scripts/mapa_ui.gd" id="2_sugp2"]
+[ext_resource type="Texture2D" uid="uid://d31lou4aow24e" path="res://assets/sprites/city_map_reference.png" id="3_jyhfs"]
 
 [node name="Main" type="Node2D" unique_id=963976557]
 script = ExtResource("1_sugp2")
+
+[node name="MapaUI" type="Control" parent="." unique_id=997075893]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1605.0
+offset_bottom = 902.0
+script = ExtResource("2_sugp2")
+
+[node name="FundoMapa" type="TextureRect" parent="MapaUI" unique_id=1859957765]
+layout_mode = 0
+offset_left = -802.0
+offset_top = 95.0
+offset_right = 2829.0
+offset_bottom = 964.0
+mouse_filter = 2
+texture = ExtResource("3_jyhfs")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EdificiosContainer" type="Control" parent="MapaUI" unique_id=809036911]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BotaoEdificio1" type="Button" parent="MapaUI/EdificiosContainer" unique_id=262371875]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 16.0
+
+[node name="BotaoEdificio2" type="Button" parent="MapaUI/EdificiosContainer" unique_id=896554477]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 16.0
+
+[node name="BotaoEdificio3" type="Button" parent="MapaUI/EdificiosContainer" unique_id=1133323236]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 16.0
 
 [node name="HUD" parent="." unique_id=1770219081 instance=ExtResource("1_0wfyh")]

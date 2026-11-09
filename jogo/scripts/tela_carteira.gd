@@ -1,3 +1,5 @@
+extends "res://scripts/tela_cheia.gd"
+
 @onready var valor_patrimonio: Label = %ValorPatrimonioTotal
 @onready var valor_investido: Label = %ValorInvestido
 @onready var valor_disponivel: Label = %ValorDisponivel
@@ -46,7 +48,7 @@ func _criar_linha(ticker: String, qtd: int) -> HBoxContainer:
 	if custo > 0.0:
 		pct = lucro / custo * 100.0
 
-	var cor := COR_NEUTRA
+	var cor := COR_NEUTRA  # <--- Corrigido: adicionada a indentação correta
 	if lucro > 0.0:
 		cor = COR_BOA
 	elif lucro < 0.0:

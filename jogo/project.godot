@@ -30,7 +30,7 @@ window/stretch/aspect="expand"
 
 [gui]
 
-theme/custom="res://assets/lucrey_theme.tres"
+theme/custom="uid://da1ca2f8a58rd"
 
 [input]
 

@@ -4,7 +4,7 @@ extends PanelContainer
 
 signal aba_selecionada(nome: String)
 
-const ABAS := ["Mapa", "Cotações", "Notícias", "Missões", "Conquistas", "Loja"]
+const ABAS := ["Mapa", "Carteira", "Cotações", "Notícias", "Missões", "Conquistas", "Loja"]
 
 @onready var abas: HBoxContainer = %Abas
 
@@ -21,4 +21,12 @@ func _ready() -> void:
 		botao.pressed.connect(func() -> void: aba_selecionada.emit(nome))
 		abas.add_child(botao)
 		if nome == "Mapa":
+			botao.button_pressed = true
+
+
+## Marca uma aba por código, sem disparar o sinal aba_selecionada.
+func selecionar(nome: String) -> void:
+	for filho in abas.get_children():
+		var botao := filho as Button
+		if botao != null and botao.text == nome:
 			botao.button_pressed = true
