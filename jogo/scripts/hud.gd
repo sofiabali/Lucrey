@@ -1,6 +1,6 @@
 extends CanvasLayer
 ## HUD: barra superior, painéis laterais, botão Investir, barra inferior
-## e as telas cheias (carteira, notícias, missões).
+## e as telas cheias (carteira, notícias, missões, loja, conquistas, cotações).
 
 const COR_POSITIVA := Color(0.18, 0.8, 0.44)
 const COR_NEGATIVA := Color.CRIMSON
@@ -29,6 +29,9 @@ const COR_NEGATIVA := Color.CRIMSON
 @onready var tela_carteira: TelaCheia = %TelaCarteira
 @onready var tela_noticias: TelaCheia = %TelaNoticias
 @onready var tela_missoes: TelaCheia = %TelaMissoes
+@onready var tela_loja: TelaCheia = %TelaLoja
+@onready var tela_conquistas: TelaCheia = %TelaConquistas  # NOVO
+@onready var tela_cotacoes: TelaCheia = %TelaCotacoes  # NOVO
 
 
 func _ready() -> void:
@@ -43,7 +46,7 @@ func _ready() -> void:
 	painel_missao.ver_missoes_pedido.connect(_abrir_tela.bind(tela_missoes))
 	painel_noticias.ver_noticias_pedido.connect(_abrir_tela.bind(tela_noticias))
 
-	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes]:
+	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:  # NOVO
 		tela.fechada.connect(_on_tela_fechada)
 
 	GameState.dinheiro_mudou.connect(_on_dinheiro_mudou)
@@ -90,13 +93,13 @@ func _abrir_tela(tela: TelaCheia) -> void:
 
 
 func _fechar_telas() -> void:
-	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes]:
+	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:  # NOVO
 		tela.hide()
 
 
 ## Quando nenhuma tela cheia está aberta, a barra inferior volta para "Mapa".
 func _on_tela_fechada() -> void:
-	if not (tela_carteira.visible or tela_noticias.visible or tela_missoes.visible):
+	if not (tela_carteira.visible or tela_noticias.visible or tela_missoes.visible or tela_loja.visible or tela_conquistas.visible or tela_cotacoes.visible):  # NOVO
 		barra_inferior.selecionar("Mapa")
 
 
@@ -106,10 +109,16 @@ func _on_aba_selecionada(nome: String) -> void:
 			_fechar_telas()
 		"Carteira":
 			_abrir_tela(tela_carteira)
+		"Cotações":  # NOVO
+			_abrir_tela(tela_cotacoes)  # NOVO
 		"Notícias":
 			_abrir_tela(tela_noticias)
 		"Missões":
 			_abrir_tela(tela_missoes)
+		"Conquistas":  # NOVO
+			_abrir_tela(tela_conquistas)  # NOVO
+		"Loja":
+			_abrir_tela(tela_loja)
 		_:
 			print("Aba ainda sem tela: ", nome)
 

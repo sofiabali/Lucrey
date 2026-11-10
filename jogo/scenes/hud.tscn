@@ -10,7 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://cu0l4j3dh2iay" path="res://scenes/barra_inferior.tscn" id="6_mphia"]
 [ext_resource type="PackedScene" uid="uid://dthu7ytxn0aro" path="res://scenes/tela_configurações.tscn" id="8_0i1j5"]
 [ext_resource type="PackedScene" path="res://scenes/tela_noticias.tscn" id="9_tnoticias"]
-[ext_resource type="PackedScene" path="res://scenes/tela_missoes.tscn" id="10_tmissoes"]
+[ext_resource type="PackedScene" uid="uid://comyqtc3lmoyp" path="res://scenes/tela_missoes.tscn" id="10_tmissoes"]
+[ext_resource type="PackedScene" uid="uid://ce4xsahs6vibu" path="res://scenes/tela_loja.tscn" id="12_apjy4"]
+[ext_resource type="PackedScene" uid="uid://btkqfghjuynhg" path="res://scenes/tela_conquistas.tscn" id="13_eld54"]
+[ext_resource type="PackedScene" uid="uid://cyt0oc8ucd7s3" path="res://scenes/tela_cotacoes.tscn" id="14_3swnk"]
 
 [node name="HUD" type="CanvasLayer" unique_id=1770219081]
 script = ExtResource("1_047uy")
@@ -273,10 +276,17 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
-[node name="TelaNoticias" parent="." instance=ExtResource("9_tnoticias")]
+[node name="TelaNoticias" parent="." unique_id=34798341 instance=ExtResource("9_tnoticias")]
 unique_name_in_owner = true
-visible = false
 
-[node name="TelaMissoes" parent="." instance=ExtResource("10_tmissoes")]
+[node name="TelaMissoes" parent="." unique_id=783636403 instance=ExtResource("10_tmissoes")]
 unique_name_in_owner = true
-visible = false
+
+[node name="TelaLoja" parent="." unique_id=1496359091 instance=ExtResource("12_apjy4")]
+unique_name_in_owner = true
+
+[node name="TelaConquistas" parent="." unique_id=1733713584 instance=ExtResource("13_eld54")]
+unique_name_in_owner = true
+
+[node name="TelaCotacoes" parent="." unique_id=327500004 instance=ExtResource("14_3swnk")]
+unique_name_in_owner = true
