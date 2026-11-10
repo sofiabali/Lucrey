@@ -1,0 +1,26 @@
+LUCREY — CIDADE ORIGINAL COM MAPA ARRASTÁVEL (HORIZONTAL)
+
+Esta versão deriva do LUCREY Cidade Original Sem Movimento.
+
+NOVO
+- Clique, segure e arraste a cidade para a esquerda ou direita com o mouse.
+- Também aceita gesto de arrastar em tela sensível ao toque.
+- Deslocamento limitado: não revela faixas vazias nas bordas.
+- Áreas clicáveis dos prédios se movem junto à imagem da cidade.
+- Os menus, carteira e demais controles permanecem fixos.
+
+PRESERVADO
+- A cidade é estática: sem pedestres e carros animados.
+- Os automóveis impressos na arte original permanecem.
+- Sistema financeiro, missões, notícias, gráficos e salvamento.
+
+COMO EXECUTAR
+1. Extraia o ZIP.
+2. Abra Lucrey-main/jogo/project.godot na Godot 4.x.
+3. Pressione F5.
+4. Feche o tutorial e arraste a cidade nas áreas livres entre os prédios.
+5. Clique em um prédio para abrir sua função.
+
+OBSERVAÇÃO
+O deslocamento é restrito a uma distância moderada, pois a arte base é uma única imagem.
+O motor Godot não estava instalado neste ambiente para validar o comportamento gráfico em execução.

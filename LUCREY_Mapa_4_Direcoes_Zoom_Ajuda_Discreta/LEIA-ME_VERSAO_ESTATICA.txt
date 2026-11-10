@@ -1,0 +1,9 @@
+LUCREY - CIDADE ORIGINAL ESTÁTICA
+
+Esta edição utiliza o cenário da cidade original (cidade_limpa.jpg), sem os carros e pedestres gerados por GDScript. Veículos e pessoas já desenhados na imagem fazem parte do fundo e permanecem imóveis.
+
+Mantidos: prédios clicáveis, abas, investimento, carteira, notícias, missões, gráficos, salvamento e demais recursos do projeto de origem.
+
+Para abrir: Godot > Importar projeto > Lucrey-main/jogo/project.godot > F5.
+
+A execução gráfica na Godot não foi confirmada neste ambiente.

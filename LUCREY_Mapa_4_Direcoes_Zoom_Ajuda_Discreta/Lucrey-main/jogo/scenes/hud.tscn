@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://cvgb8dg7x0g30"]
+
+[ext_resource type="Texture2D" uid="uid://7smdca4rs6qc" path="res://icon.svg" id="1_ahhtf"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1770219081]
+
+[node name="BarraSuperior" type="PanelContainer" parent="." unique_id=1127181464]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="Margem" type="MarginContainer" parent="BarraSuperior" unique_id=843537435]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Linha" type="HBoxContainer" parent="BarraSuperior/Margem" unique_id=931334300]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Logo" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=2879745]
+layout_mode = 2
+text = "LUCREY"
+
+[node name="CartaoInvestidor" type="HBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=2128729010]
+layout_mode = 2
+
+[node name="Avatar" type="TextureRect" parent="BarraSuperior/Margem/Linha/CartaoInvestidor" unique_id=856102883]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("1_ahhtf")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Info" type="VBoxContainer" parent="BarraSuperior/Margem/Linha/CartaoInvestidor" unique_id=349676995]
+layout_mode = 2
+
+[node name="LabelTitulo" type="Label" parent="BarraSuperior/Margem/Linha/CartaoInvestidor/Info" unique_id=1409416881]
+layout_mode = 2
+text = "Investidor Iniciante"
+
+[node name="LinhaNivel" type="HBoxContainer" parent="BarraSuperior/Margem/Linha/CartaoInvestidor/Info" unique_id=663400104]
+layout_mode = 2
+
+[node name="LabelNivel" type="Label" parent="BarraSuperior/Margem/Linha/CartaoInvestidor/Info/LinhaNivel" unique_id=741116333]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NÍVEL 1"
+horizontal_alignment = 2
+
+[node name="LabelXp" type="Label" parent="BarraSuperior/Margem/Linha/CartaoInvestidor/Info/LinhaNivel" unique_id=132505563]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 / 250 XP"
+
+[node name="BarraXp" type="ProgressBar" parent="BarraSuperior/Margem/Linha/CartaoInvestidor/Info" unique_id=1877057913]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+show_percentage = false
+
+[node name="GrupoDinheiro" type="VBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=507080946]
+layout_mode = 2
+
+[node name="TituloDinheiro" type="Label" parent="BarraSuperior/Margem/Linha/GrupoDinheiro" unique_id=1379602662]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8047428, 0.8047426, 0.8047426, 1)
+theme_override_font_sizes/font_size = 12
+text = "DINHEIRO"
+
+[node name="ValorDinheiro" type="Label" parent="BarraSuperior/Margem/Linha/GrupoDinheiro" unique_id=158899059]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="GrupoPatrimonio" type="VBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=1389410618]
+layout_mode = 2
+
+[node name="TituloPatrimonio" type="Label" parent="BarraSuperior/Margem/Linha/GrupoPatrimonio" unique_id=671811843]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
+theme_override_font_sizes/font_size = 12
+text = "PATRIMÒNIO"
+
+[node name="ValorPatrimonio" type="Label" parent="BarraSuperior/Margem/Linha/GrupoPatrimonio" unique_id=113702653]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="GrupoRentabilidade" type="VBoxContainer" parent="BarraSuperior/Margem/Linha" unique_id=1004566597]
+layout_mode = 2
+
+[node name="TituloRentabilidade" type="Label" parent="BarraSuperior/Margem/Linha/GrupoRentabilidade" unique_id=37296622]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
+theme_override_font_sizes/font_size = 12
+text = "RENTABILIDADE"
+
+[node name="ValorRentabilidade" type="Label" parent="BarraSuperior/Margem/Linha/GrupoRentabilidade" unique_id=2077467999]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="LabelDia" type="Label" parent="BarraSuperior/Margem/Linha" unique_id=2011235124]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BotaoAvancar" type="Button" parent="BarraSuperior/Margem/Linha" unique_id=1637455462]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Avançar Dia"
