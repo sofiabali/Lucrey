@@ -1,0 +1,13 @@
+LUCREY - CIDADE ORIGINAL CORRIGIDA
+
+1. Abra Lucrey-main/jogo/project.godot na Godot 4.3+
+2. Pressione F5 para iniciar.
+3. A lateral direita tem um botão de recolhimento e cada seção pode ser aberta/fechada.
+4. NOTÍCIAS > VER TODAS abre o histórico de eventos.
+5. COTAÇÕES > VER GRÁFICO abre um gráfico separado por ação.
+6. INVESTIR permite selecionar ações, comprar e vender.
+7. AVANÇAR DIA altera os valores e alimenta o gráfico.
+8. AJUSTES permite salvar, carregar e desligar o trânsito automático.
+
+Aviso: versão revisada estaticamente; motor Godot não disponível neste ambiente, portanto não houve teste real de execução.
+O jogo é educativo e os preços simulados não são reais.

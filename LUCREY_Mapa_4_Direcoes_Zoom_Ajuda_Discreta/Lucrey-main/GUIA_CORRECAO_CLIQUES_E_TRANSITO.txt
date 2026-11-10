@@ -1,0 +1,10 @@
+LUCREY — revisão da cidade original
+
+Correções nesta versão:
+1. Clique nas áreas de Bolsa, Corretora, Banco, Mercado, Praça, Centro de Notícias, Academia, Minhas Empresas e Ranking para abrir o módulo correspondente. Passe o mouse: um contorno verde destaca a região interativa.
+2. Rotas dos carros redesenhadas em 8 trajetos curtos, cada um com direção fixa e faixa separada, utilizando coordenadas da arte cidade_limpa.jpg.
+3. Pedestres, menus, salvamento e sistema financeiro preservados.
+
+Como abrir: Godot > Importar > Lucrey-main/jogo/project.godot > F5.
+
+Importante: revisão estática dos scripts; a execução gráfica na Godot não pôde ser confirmada neste ambiente.
