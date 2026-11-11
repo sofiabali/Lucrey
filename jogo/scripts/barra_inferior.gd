@@ -22,3 +22,11 @@ func _ready() -> void:
 		abas.add_child(botao)
 		if nome == "Mapa":
 			botao.button_pressed = true
+
+
+## Marca uma aba por código, sem disparar o sinal aba_selecionada.
+func selecionar(nome: String) -> void:
+	for filho in abas.get_children():
+		var botao := filho as Button
+		if botao != null and botao.text == nome:
+			botao.button_pressed = true

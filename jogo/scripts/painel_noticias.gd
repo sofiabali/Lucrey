@@ -1,5 +1,9 @@
+class_name PainelNoticias
 extends PanelContainer
 ## Painel "Notícias": mostra as últimas notícias geradas pelo mercado.
+
+## Emitido quando o jogador clica em VER TODAS.
+signal ver_noticias_pedido
 
 const QTD_VISIVEL := 3
 const COR_BOA := Color(0.18, 0.8, 0.443)
@@ -12,7 +16,7 @@ const COR_NEUTRA := Color(0.561, 0.631, 0.702)
 
 func _ready() -> void:
 	Market.noticias_mudou.connect(_atualizar)
-	botao_ver.pressed.connect(func() -> void: print("Ver todas as notícias"))
+	botao_ver.pressed.connect(func() -> void: ver_noticias_pedido.emit())
 	_atualizar()
 
 

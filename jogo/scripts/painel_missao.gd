@@ -1,5 +1,9 @@
+class_name PainelMissao
 extends PanelContainer
 ## Painel "Missão ativa": título, descrição, progresso e recompensa.
+
+## Emitido quando o jogador clica em VER MISSÕES.
+signal ver_missoes_pedido
 
 @onready var label_titulo: Label = %LabelTituloMissao
 @onready var label_descricao: Label = %LabelDescricao
@@ -12,7 +16,7 @@ extends PanelContainer
 func _ready() -> void:
 	GameState.missao_mudou.connect(_atualizar)
 	GameState.dinheiro_mudou.connect(func(_v: float) -> void: _atualizar())
-	botao_ver.pressed.connect(func() -> void: print("Ver missões"))
+	botao_ver.pressed.connect(func() -> void: ver_missoes_pedido.emit())
 	_atualizar()
 
 

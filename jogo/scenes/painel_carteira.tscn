@@ -43,3 +43,5 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 text = "VER CARTEIRA"
+
+[connection signal="pressed" from="Conteudo/BotaoVerCarteira" to="." method="_on_botao_ver_carteira_pressed"]

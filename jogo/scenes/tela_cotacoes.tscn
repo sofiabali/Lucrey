@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cyt0oc8ucd7s3"]
+
+[ext_resource type="Script" uid="uid://c3b8up61nisgn" path="res://scripts/tela_cotacoes.gd" id="1_7xbgu"]
+
+[node name="TelaCotacoes" type="Control" unique_id=327500004]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7xbgu")
