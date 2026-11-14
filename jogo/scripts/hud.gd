@@ -1,3 +1,4 @@
+
 extends CanvasLayer
 ## HUD: barra superior, painéis laterais, botão Investir, barra inferior
 ## e as telas cheias (carteira, notícias, missões, loja, conquistas, cotações).
@@ -20,7 +21,7 @@ const COR_NEGATIVA := Color.CRIMSON
 @onready var botao_investir: Button = %BotaoInvestir
 @onready var barra_inferior: BarraInferior = %BarraInferior
 
-# Painéis laterais (cada um avisa o HUD por sinal quando o botão é clicado)
+# Painéis laterais
 @onready var painel_carteira: PainelCarteira = %PainelCarteira
 @onready var painel_missao: PainelMissao = %PainelMissao
 @onready var painel_noticias: PainelNoticias = %PainelNoticias
@@ -30,8 +31,8 @@ const COR_NEGATIVA := Color.CRIMSON
 @onready var tela_noticias: TelaCheia = %TelaNoticias
 @onready var tela_missoes: TelaCheia = %TelaMissoes
 @onready var tela_loja: TelaCheia = %TelaLoja
-@onready var tela_conquistas: TelaCheia = %TelaConquistas  # NOVO
-@onready var tela_cotacoes: TelaCheia = %TelaCotacoes  # NOVO
+@onready var tela_conquistas: TelaCheia = %TelaConquistas
+@onready var tela_cotacoes: TelaCheia = %TelaCotacoes
 
 
 func _ready() -> void:
@@ -41,14 +42,16 @@ func _ready() -> void:
 	botao_investir.pressed.connect(_on_botao_investir_pressed)
 	barra_inferior.aba_selecionada.connect(_on_aba_selecionada)
 
-	# .bind() entrega a tela escolhida para a função _abrir_tela
+	# Conexões dos painéis laterais
 	painel_carteira.ver_carteira_pedido.connect(_abrir_tela.bind(tela_carteira))
 	painel_missao.ver_missoes_pedido.connect(_abrir_tela.bind(tela_missoes))
 	painel_noticias.ver_noticias_pedido.connect(_abrir_tela.bind(tela_noticias))
 
-	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:  # NOVO
+	# Conexões das telas cheias
+	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:
 		tela.fechada.connect(_on_tela_fechada)
 
+	# Sinais do jogo
 	GameState.dinheiro_mudou.connect(_on_dinheiro_mudou)
 	GameState.xp_mudou.connect(_atualizar_tudo)
 	GameState.moedas_mudou.connect(_atualizar_tudo)
@@ -57,15 +60,31 @@ func _ready() -> void:
 
 	_atualizar_tudo()
 
+	# NOVO: inicia o tutorial da Mariane
+	call_deferred("_iniciar_tutorial_mariane")
+
+
+# --- Tutorial da Mariane ----------------------------------------------
+
+# NOVO: cria e inicia o tutorial no HUD
+func _iniciar_tutorial_mariane() -> void:
+	var cena: PackedScene = load("res://scenes/tutorial_mariane.tscn")
+	var tutorial = cena.instantiate()
+	add_child(tutorial)
+	tutorial.iniciar(self)
+
+
+# --- Atualização do HUD -----------------------------------------------
 
 func _atualizar_tudo() -> void:
 	# Dinheiro e patrimônio
 	label_dinheiro.text = "R$ %.2f" % GameState.dinheiro
 	label_patrimonio.text = "R$ %.2f" % GameState.patrimonio()
 
-	# Rentabilidade (verde se positiva, vermelha se negativa)
+	# Rentabilidade
 	var rent: float = GameState.rentabilidade()
 	label_rentabilidade.text = "%+.2f%%" % rent
+
 	if rent < 0:
 		label_rentabilidade.add_theme_color_override("font_color", COR_NEGATIVA)
 	elif rent > 0:
@@ -93,13 +112,13 @@ func _abrir_tela(tela: TelaCheia) -> void:
 
 
 func _fechar_telas() -> void:
-	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:  # NOVO
+	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:
 		tela.hide()
 
 
 ## Quando nenhuma tela cheia está aberta, a barra inferior volta para "Mapa".
 func _on_tela_fechada() -> void:
-	if not (tela_carteira.visible or tela_noticias.visible or tela_missoes.visible or tela_loja.visible or tela_conquistas.visible or tela_cotacoes.visible):  # NOVO
+	if not (tela_carteira.visible or tela_noticias.visible or tela_missoes.visible or tela_loja.visible or tela_conquistas.visible or tela_cotacoes.visible):
 		barra_inferior.selecionar("Mapa")
 
 
@@ -109,14 +128,14 @@ func _on_aba_selecionada(nome: String) -> void:
 			_fechar_telas()
 		"Carteira":
 			_abrir_tela(tela_carteira)
-		"Cotações":  # NOVO
-			_abrir_tela(tela_cotacoes)  # NOVO
+		"Cotações":
+			_abrir_tela(tela_cotacoes)
 		"Notícias":
 			_abrir_tela(tela_noticias)
 		"Missões":
 			_abrir_tela(tela_missoes)
-		"Conquistas":  # NOVO
-			_abrir_tela(tela_conquistas)  # NOVO
+		"Conquistas":
+			_abrir_tela(tela_conquistas)
 		"Loja":
 			_abrir_tela(tela_loja)
 		_:
@@ -129,7 +148,7 @@ func _on_botao_avancar_pressed() -> void:
 	Market.avancar_dia()
 
 
-# Tela de notificações (pop-up ao lado do botão)
+# Tela de notificações
 func _on_botao_notificacoes_pressed() -> void:
 	var janela = $"TelaNotificações"
 	var painel = janela.get_node("CenterContainer")
@@ -142,7 +161,7 @@ func _on_botao_notificacoes_pressed() -> void:
 	janela.show()
 
 
-# Tela de configurações (pop-up ao lado do botão)
+# Tela de configurações
 func _on_botao_config_pressed() -> void:
 	var janela = $"TelaConfigurações"
 	var painel = janela.get_node("CenterContainer")
