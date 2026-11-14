@@ -1,7 +1,8 @@
 
+
 extends Control
 ## Tutorial interativo da Mariane.
-## As telas do jogo são abertas pelo jogador, sem sobreposição do mercado.
+## Inclui compra, carteira, matemática e avanço do dia.
 
 const IMAGEM: Texture2D = preload("res://assets/mariane.png")
 const FUNDO := Color(0.055, 0.09, 0.13, 0.97)
@@ -16,6 +17,7 @@ var baliza: PanelContainer
 var fala: Label
 var instrucao: Label
 var proximo: Button
+
 var acao_panel: PanelContainer
 var opcoes: VBoxContainer
 var saldo: Label
@@ -25,17 +27,27 @@ var pergunta_opcoes: VBoxContainer
 
 var aguardando_fechar: String = ""
 
+# NOVO: valores usados na explicação do avanço do dia.
+var dia_anterior: int = 0
+var patrimonio_anterior: float = 0.0
+var carteira_anterior: float = 0.0
+
 
 func iniciar(h: CanvasLayer) -> void:
 	hud = h
 	_montar()
 
+	# Se a missão de patrimônio já foi concluída,
+	# o tutorial começa pela explicação do avanço do dia.
 	if GameState.missao_indice >= 2:
+		respondeu = true
 		etapa = 7
-		concluido = true
 
 	hud.barra_inferior.aba_selecionada.connect(_aba_clicada)
 	GameState.dinheiro_mudou.connect(_dinheiro_mudou)
+
+	# NOVO: detecta quando o jogador avança o dia.
+	Market.dia_avancou.connect(_dia_avancou)
 
 	_mostrar_etapa()
 
@@ -90,7 +102,7 @@ func _montar() -> void:
 	retrato.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(retrato)
 
-	# Balão de fala da Mariane.
+	# Balão de fala.
 	baliza = _painel()
 	baliza.anchor_top = 1.0
 	baliza.anchor_bottom = 1.0
@@ -117,9 +129,7 @@ func _montar() -> void:
 	proximo = _botao("Continuar", _continuar)
 	caixa.add_child(proximo)
 
-	# Mercado de ações: aparece somente na etapa de compra.
-
-	# Mercado de ações centralizado na tela
+	# Mercado de ações centralizado.
 	acao_panel = _painel()
 	acao_panel.set_anchors_preset(Control.PRESET_CENTER)
 	acao_panel.offset_left = -250
@@ -127,7 +137,6 @@ func _montar() -> void:
 	acao_panel.offset_right = 250
 	acao_panel.offset_bottom = 180
 	add_child(acao_panel)
-
 
 	var v := VBoxContainer.new()
 	v.add_theme_constant_override("separation", 10)
@@ -144,7 +153,7 @@ func _montar() -> void:
 
 	acao_panel.hide()
 
-	# Janela exclusiva para a questão de matemática.
+	# Questão de matemática centralizada.
 	pergunta_panel = _painel()
 	pergunta_panel.set_anchors_preset(Control.PRESET_CENTER)
 	pergunta_panel.custom_minimum_size = Vector2(570, 340)
@@ -223,8 +232,8 @@ func _mostrar_etapa() -> void:
 			proximo.hide()
 
 		4:
-			fala.text = "Hora da sua primeira compra! Uma ação representa uma pequena parte de uma empresa. Escolha uma opção no painel do mercado."
-			instrucao.text = "Escolha uma empresa no painel à direita e clique em COMPRAR 1 AÇÃO."
+			fala.text = "Hora da sua primeira compra! Uma ação representa uma pequena parte de uma empresa. Escolha uma opção no mercado."
+			instrucao.text = "Escolha uma empresa no painel central e clique em COMPRAR 1 AÇÃO."
 			proximo.hide()
 			_mostrar_acoes()
 
@@ -238,16 +247,56 @@ func _mostrar_etapa() -> void:
 			instrucao.text = "Clique em RESPONDER QUESTÃO."
 			proximo.text = "Responder questão"
 
+		# NOVO: introdução ao avanço do dia.
 		7:
-			fala.text = "Parabéns! Você concluiu o tutorial. Confira suas conquistas e suas missões! A próxima questão ficará para o nível 2."
-			instrucao.text = "Tutorial concluído!"
+			fala.text = "Agora vamos descobrir como o mercado muda! Ao clicar em Avançar Dia, um novo dia começa e os preços das ações podem subir ou cair."
+			instrucao.text = "As notícias podem influenciar os preços, mas não garantem que uma ação vai subir ou cair."
+			proximo.text = "Entendi!"
+
+		# NOVO: jogador precisa clicar no botão real.
+		8:
+			fala.text = "Vamos testar! Observe seu patrimônio e o valor da sua carteira. Depois, clique em AVANÇAR DIA, no canto superior direito."
+			instrucao.text = "Clique no botão verde AVANÇAR DIA para continuar."
+			proximo.hide()
+
+			dia_anterior = Market.dia
+			patrimonio_anterior = GameState.patrimonio()
+			carteira_anterior = GameState.valor_da_carteira()
+
+		# NOVO: explica o resultado do avanço.
+		9:
+			var variacao: float = GameState.valor_da_carteira() - carteira_anterior
+
+			fala.text = "Muito bem! Você avançou do dia %d para o dia %d. " % [
+				dia_anterior, Market.dia
+			]
+
+			if variacao > 0.01:
+				fala.text += "O valor das suas ações aumentou! Isso significa que sua carteira se valorizou."
+			elif variacao < -0.01:
+				fala.text += "O valor das suas ações diminuiu. Isso mostra que os investimentos também apresentam riscos."
+			else:
+				fala.text += "O valor da sua carteira permaneceu praticamente igual. Nem todo dia apresenta grandes mudanças."
+
+			instrucao.text = "Patrimônio antes: R$ %.2f | Agora: R$ %.2f" % [
+				patrimonio_anterior,
+				GameState.patrimonio()
+			]
+
+			proximo.text = "Finalizar tutorial"
+
+		# Despedida da Mariane.
+		10:
+			concluido = true
+			fala.text = "Parabéns! Você concluiu o nível 1 do Lucrey! Aprendeu sobre ações, carteira, missões, matemática e como o mercado muda com o tempo."
+			instrucao.text = "Continue explorando o jogo! A próxima questão ficará para o nível 2."
 			proximo.text = "Fechar Mariane"
 
 
 func _continuar() -> void:
 	if etapa == 6:
 		_mostrar_pergunta()
-	elif etapa == 7:
+	elif etapa == 10:
 		queue_free()
 	else:
 		etapa += 1
@@ -255,7 +304,6 @@ func _continuar() -> void:
 
 
 func _aba_clicada(nome: String) -> void:
-	# O tutorial só avança depois que o jogador fecha a tela.
 	if etapa == 2 and nome == "Notícias":
 		aguardando_fechar = "Notícias"
 		instrucao.text = "Explore as notícias e feche a tela para continuar."
@@ -268,7 +316,6 @@ func _aba_clicada(nome: String) -> void:
 		aguardando_fechar = "Carteira"
 		instrucao.text = "Confira sua ação na carteira e feche a tela para continuar."
 
-	# Esconde o mercado quando qualquer tela cheia é aberta.
 	if _tela_aberta():
 		acao_panel.hide()
 
@@ -320,7 +367,7 @@ func _mostrar_pergunta() -> void:
 	for filho in pergunta_opcoes.get_children():
 		filho.queue_free()
 
-	fala.text = "Resolva a questão para ganhar uma recompensa fictícia de R$ 1.000!"
+	fala.text = "Resolva a questão para ganhar uma recompensa fictícia!"
 	instrucao.text = "Escolha a alternativa correta."
 	proximo.hide()
 
@@ -358,8 +405,17 @@ func _responder(correta: bool) -> void:
 
 	hud._atualizar_tudo()
 
-	concluido = true
+	# Agora o tutorial continua com a explicação de Avançar Dia.
 	etapa = 7
 	_mostrar_etapa()
 
-	instrucao.text = "Resposta correta! Patrimônio: R$ %.2f • missão concluída." % GameState.patrimonio()
+	instrucao.text = "Resposta correta! Patrimônio: R$ %.2f. Vamos conhecer o avanço dos dias!" % GameState.patrimonio()
+
+
+# NOVO: chamado quando o jogador realmente avança o dia.
+func _dia_avancou(_dia: int) -> void:
+	if etapa != 8:
+		return
+
+	etapa = 9
+	_mostrar_etapa()
