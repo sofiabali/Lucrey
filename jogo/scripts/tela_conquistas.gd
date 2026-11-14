@@ -20,13 +20,15 @@ func _construir() -> void:
 func _atualizar() -> void:
 	limpar(conteudo)
 
+	var conquistas: Array = Conquistas.obter_lista()
+
 	var feitas := 0
-	for c in CONQUISTAS:
+	for c in conquistas:
 		if c["atual"] >= c["meta"]:
 			feitas += 1
-	conteudo.add_child(criar_label("Concluídas: %d / %d" % [feitas, CONQUISTAS.size()], 20, COR_ALERTA))
+	conteudo.add_child(criar_label("Concluídas: %d / %d" % [feitas, conquistas.size()], 20, COR_ALERTA))
 
-	for c in CONQUISTAS:
+	for c in conquistas:
 		conteudo.add_child(_criar_cartao_conquista(c))
 
 

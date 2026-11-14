@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameState="*uid://bbo25stpvv050"
 Market="*uid://d2yqdylowmveo"
+Conquistas="*uid://d4m2k2fn10w0w"
 
 [display]
 

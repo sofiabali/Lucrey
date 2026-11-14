@@ -6,6 +6,7 @@ signal xp_mudou
 signal moedas_mudou
 signal gemas_mudou
 signal missao_mudou
+signal operacao_realizada(tipo: String, ticker: String, quantidade: int, preco: float, lucro_pct: float)
 
 const DINHEIRO_INICIAL := 1000.0
 
@@ -57,6 +58,7 @@ func comprar(ticker: String, quantidade: int) -> bool:
 	custo_total[ticker] = custo_total.get(ticker, 0.0) + custo
 	_verificar_missao()
 	dinheiro_mudou.emit(dinheiro)
+	operacao_realizada.emit("compra", ticker, quantidade, acao.preco, 0.0)
 	return true
 
 
@@ -69,13 +71,20 @@ func vender(ticker: String, quantidade: int) -> bool:
 	# Tira da posição a parte proporcional do custo que foi vendida
 	var qtd_antes: int = carteira[ticker]
 	var custo_atual: float = custo_total.get(ticker, 0.0)
+	# Lucro desta venda em %, comparando com o custo médio por ação
+	var custo_medio: float = custo_atual / qtd_antes
+	var lucro_pct := 0.0
+	if custo_medio > 0.0:
+		lucro_pct = (acao.preco / custo_medio - 1.0) * 100.0
 	custo_total[ticker] = custo_atual - custo_atual * quantidade / qtd_antes
 	carteira[ticker] -= quantidade
 	if carteira[ticker] == 0:
 		custo_total.erase(ticker)
 	dinheiro += acao.preco * quantidade
 	dinheiro_mudou.emit(dinheiro)
+	operacao_realizada.emit("venda", ticker, quantidade, acao.preco, lucro_pct)
 	return true
+
 
 
 func valor_da_carteira() -> float:
