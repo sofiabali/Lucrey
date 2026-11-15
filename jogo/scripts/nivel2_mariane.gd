@@ -1,12 +1,10 @@
 
 extends Control
-## Nível 2 do Lucrey: Introdução à Estratégia.
-## Mariane é uma guia, não controla as decisões do jogador.
+## Nível 2: Introdução à Estratégia.
 
 const IMAGEM: Texture2D = preload("res://assets/mariane.png")
 const FUNDO := Color(0.055, 0.09, 0.13, 0.97)
 const VERDE := Color(0.23, 0.83, 0.48)
-const AZUL := Color(0.12, 0.23, 0.32)
 const TEXTO_CLARO := Color(0.78, 0.86, 0.89)
 
 const QUESTOES := [
@@ -42,12 +40,11 @@ var retrato: TextureRect
 var balao: PanelContainer
 var fala: Label
 var instrucao: Label
-var botao_fechar_fala: Button
 
 var painel_mercado: PanelContainer
 var painel_questao: PanelContainer
-
 var caixa_questao: VBoxContainer
+
 var seletor: OptionButton
 var quantidade: SpinBox
 
@@ -66,8 +63,11 @@ var compra_pendente: String = ""
 var quantidade_pendente: int = 0
 
 var aviso_dia_15: bool = false
-var concluido: bool = false
+var aviso_dia_16: bool = false
+var aviso_dia_17: bool = false
+var aviso_dia_20: bool = false
 
+var concluido: bool = false
 var acao_apos_fala: Callable = Callable()
 
 
@@ -85,12 +85,15 @@ func iniciar(h: CanvasLayer) -> void:
 	GameState.missao_mudou.connect(_missao_mudou)
 	GameState.operacao_realizada.connect(_operacao_realizada)
 
+	concluido = GameState.nivel_2_concluido
+
 	_atualizar_mercado()
 
-	_mostrar_fala(
-		"Bem-vindo(a) ao nível 2! Agora você pode explorar o mercado e escolher suas próprias estratégias.",
-		"Use INVESTIR quando quiser negociar ações. Observe também as notícias e suas missões."
-	)
+	if not concluido:
+		_mostrar_fala(
+			"Bem-vindo(a) ao nível 2! Agora suas decisões fazem a diferença.",
+			"Explore o mapa, acompanhe as notícias e use INVESTIR quando quiser negociar ações."
+		)
 
 
 # ==================================================
@@ -102,7 +105,6 @@ func _criar_painel() -> PanelContainer:
 	var estilo := StyleBoxFlat.new()
 
 	estilo.bg_color = FUNDO
-
 	estilo.set_corner_radius_all(18)
 	estilo.set_content_margin_all(20)
 
@@ -110,6 +112,7 @@ func _criar_painel() -> PanelContainer:
 	estilo.border_width_right = 1
 	estilo.border_width_top = 1
 	estilo.border_width_bottom = 1
+
 	estilo.border_color = Color(0.22, 0.43, 0.45)
 
 	p.add_theme_stylebox_override("panel", estilo)
@@ -141,13 +144,10 @@ func _botao(t: String, callback: Callable) -> Button:
 
 
 func _separador() -> HSeparator:
-	var s := HSeparator.new()
-	return s
+	return HSeparator.new()
 
 
 func _montar_interface() -> void:
-	# Permite clicar no mapa e no HUD quando não há
-	# painéis cobrindo essas regiões.
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	# ----------------------------------------------
@@ -158,7 +158,9 @@ func _montar_interface() -> void:
 	retrato.texture = IMAGEM
 
 	retrato.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	retrato.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	retrato.stretch_mode = (
+		TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	)
 
 	retrato.anchor_top = 1.0
 	retrato.anchor_bottom = 1.0
@@ -207,16 +209,14 @@ func _montar_interface() -> void:
 	)
 	caixa_fala.add_child(instrucao)
 
-	botao_fechar_fala = _botao(
-		"ENTENDI",
-		_fechar_fala
+	caixa_fala.add_child(
+		_botao("ENTENDI", _fechar_fala)
 	)
-	caixa_fala.add_child(botao_fechar_fala)
 
 	balao.hide()
 
 	# ----------------------------------------------
-	# PAINEL DO MERCADO
+	# MERCADO DE AÇÕES
 	# ----------------------------------------------
 
 	painel_mercado = _criar_painel()
@@ -240,10 +240,12 @@ func _montar_interface() -> void:
 		"MERCADO DE AÇÕES",
 		25
 	)
+
 	titulo_mercado.add_theme_color_override(
 		"font_color",
 		VERDE
 	)
+
 	mercado.add_child(titulo_mercado)
 
 	mercado.add_child(
@@ -269,9 +271,7 @@ func _montar_interface() -> void:
 
 	seletor = OptionButton.new()
 	seletor.custom_minimum_size.y = 44
-	seletor.item_selected.connect(
-		_empresa_alterada
-	)
+	seletor.item_selected.connect(_empresa_alterada)
 	mercado.add_child(seletor)
 
 	label_preco = _texto("", 15)
@@ -287,9 +287,11 @@ func _montar_interface() -> void:
 	quantidade.step = 1
 	quantidade.value = 1
 	quantidade.custom_minimum_size.y = 44
+
 	quantidade.value_changed.connect(
 		_quantidade_alterada
 	)
+
 	mercado.add_child(quantidade)
 
 	label_total = _texto("", 19)
@@ -297,8 +299,8 @@ func _montar_interface() -> void:
 		"font_color",
 		VERDE
 	)
-	mercado.add_child(label_total)
 
+	mercado.add_child(label_total)
 	mercado.add_child(_separador())
 
 	var linha_botoes := HBoxContainer.new()
@@ -306,24 +308,29 @@ func _montar_interface() -> void:
 		"separation",
 		12
 	)
+
 	mercado.add_child(linha_botoes)
 
 	var comprar := _botao(
 		"COMPRAR AÇÕES",
 		_tentar_comprar
 	)
+
 	comprar.size_flags_horizontal = (
 		Control.SIZE_EXPAND_FILL
 	)
+
 	linha_botoes.add_child(comprar)
 
 	var vender := _botao(
 		"VENDER AÇÕES",
 		_tentar_vender
 	)
+
 	vender.size_flags_horizontal = (
 		Control.SIZE_EXPAND_FILL
 	)
+
 	linha_botoes.add_child(vender)
 
 	mercado.add_child(
@@ -336,7 +343,7 @@ func _montar_interface() -> void:
 	painel_mercado.hide()
 
 	# ----------------------------------------------
-	# PAINEL DAS QUESTÕES
+	# QUESTÕES MATEMÁTICAS
 	# ----------------------------------------------
 
 	painel_questao = _criar_painel()
@@ -357,8 +364,8 @@ func _montar_interface() -> void:
 		"separation",
 		12
 	)
-	painel_questao.add_child(caixa_questao)
 
+	painel_questao.add_child(caixa_questao)
 	painel_questao.hide()
 
 
@@ -423,7 +430,6 @@ func _abrir_mercado() -> void:
 	if _tela_aberta():
 		return
 
-	# O botão INVESTIR chama esta função.
 	balao.hide()
 	painel_questao.hide()
 
@@ -463,11 +469,21 @@ func _atualizar_mercado() -> void:
 	for acao: Stock in Market.acoes:
 		tickers.append(acao.ticker)
 
+		var variacao: float = Market.variacao_diaria(
+			acao.ticker
+		)
+
+		var sinal := "+"
+		if variacao < 0.0:
+			sinal = ""
+
 		seletor.add_item(
-			"%s  •  %s  •  R$ %.2f" % [
+			"%s • %s • R$ %.2f • %s%.2f%%" % [
 				acao.ticker,
 				acao.setor,
-				acao.preco
+				acao.preco,
+				sinal,
+				variacao
 			]
 		)
 
@@ -480,7 +496,7 @@ func _atualizar_mercado() -> void:
 		seletor.select(indice_selecionado)
 
 	label_saldo.text = (
-		"Dia %d    |    Saldo disponível: R$ %.2f"
+		"Dia %d | Saldo disponível: R$ %.2f"
 		% [
 			Market.dia,
 			GameState.dinheiro
@@ -493,15 +509,23 @@ func _atualizar_mercado() -> void:
 		if int(GameState.carteira[ticker]) <= 0:
 			continue
 
-		var acao: Stock = Market.buscar(ticker)
+		var acao: Stock = Market.buscar(str(ticker))
 
 		if acao != null:
 			if not setores.has(acao.setor):
 				setores.append(acao.setor)
 
+	var venda_texto := "Pendente"
+
+	if GameState.venda_nivel_2_realizada:
+		venda_texto = "Concluída"
+
 	label_progresso.text = (
-		"Diversificação: %d/3 setores"
-		% setores.size()
+		"Diversificação: %d/3 setores | Missão de venda: %s"
+		% [
+			setores.size(),
+			venda_texto
+		]
 	)
 
 	_atualizar_previa()
@@ -528,14 +552,18 @@ func _atualizar_previa() -> void:
 		return
 
 	var qtd := int(quantidade.value)
-
-	# Expressão matemática 1:
-	# Custo total = preço unitário x quantidade
 	var custo: float = acao.preco * qtd
 
+	var variacao: float = Market.variacao_diaria(
+		ticker
+	)
+
 	label_preco.text = (
-		"Preço por ação: R$ %.2f"
-		% acao.preco
+		"Preço por ação: R$ %.2f | Variação diária: %+.2f%%"
+		% [
+			acao.preco,
+			variacao
+		]
 	)
 
 	label_total.text = (
@@ -545,7 +573,7 @@ func _atualizar_previa() -> void:
 
 
 # ==================================================
-# COMPRA DE AÇÕES
+# COMPRA
 # ==================================================
 
 func _tentar_comprar() -> void:
@@ -557,18 +585,15 @@ func _tentar_comprar() -> void:
 	if acao == null:
 		return
 
-	# Expressão matemática 2:
-	# Capital necessário = cotação x quantidade
 	var custo: float = acao.preco * qtd
 
 	if custo > GameState.dinheiro:
 		_mostrar_fala(
-			"Você não possui dinheiro suficiente para essa compra.",
+			"Você não possui dinheiro suficiente.",
 			"Escolha uma quantidade menor ou outra empresa."
 		)
 		return
 
-	# Bloqueio após duas respostas incorretas.
 	if Market.dia < bloqueado_ate_dia:
 		_mostrar_fala(
 			"Essa compra ainda está bloqueada.",
@@ -577,8 +602,6 @@ func _tentar_comprar() -> void:
 		)
 		return
 
-	# Primeiro desafio: disponível desde o dia 10.
-	# Segundo desafio: disponível a partir do dia 15.
 	var desafio_disponivel := false
 
 	if questoes_resolvidas == 0:
@@ -592,11 +615,10 @@ func _tentar_comprar() -> void:
 		compra_pendente = ticker
 		quantidade_pendente = qtd
 		erros_questao = 0
+
 		_mostrar_questao()
 		return
 
-	# Enquanto o segundo desafio não é liberado,
-	# o jogador pode continuar investindo livremente.
 	_realizar_compra(ticker, qtd)
 
 
@@ -622,7 +644,7 @@ func _realizar_compra(
 
 
 # ==================================================
-# VENDA DE AÇÕES
+# VENDA
 # ==================================================
 
 func _tentar_vender() -> void:
@@ -640,7 +662,7 @@ func _tentar_vender() -> void:
 	if not sucesso:
 		_mostrar_fala(
 			"Não foi possível vender essas ações.",
-			"Confira quantas ações você possui na carteira."
+			"Confira a quantidade disponível na sua carteira."
 		)
 
 
@@ -759,15 +781,12 @@ func _resposta_errada() -> void:
 	if erros_questao == 1:
 		_mostrar_fala(
 			"Essa não é a resposta correta!",
-			"Lembre-se: para calcular um aumento percentual, multiplique o valor inicial pela porcentagem e some o resultado.",
+			"Calcule a porcentagem sobre o valor inicial e depois some o rendimento.",
 			func() -> void:
 				_mostrar_questao()
 		)
 		return
 
-	# Duas respostas erradas.
-	# A primeira questão volta no mínimo no dia 15.
-	# Depois disso, a espera é de um dia.
 	if questoes_resolvidas == 0:
 		bloqueado_ate_dia = maxi(
 			15,
@@ -793,30 +812,73 @@ func _resposta_errada() -> void:
 
 func _dia_avancou(_dia: int) -> void:
 	_atualizar_mercado()
-
-	# Não deixa o painel aberto sobre o mapa
-	# quando o jogador avança o tempo.
 	painel_mercado.hide()
 
-	# Aviso especial do dia 15.
+	if concluido:
+		return
+
+	var tentativa_liberada := false
+
+	if bloqueado_ate_dia > 0:
+		if Market.dia >= bloqueado_ate_dia:
+			bloqueado_ate_dia = 0
+			tentativa_liberada = true
+
+	# DIA 15
 	if Market.dia >= 15 and not aviso_dia_15:
 		aviso_dia_15 = true
 
 		_mostrar_fala(
-			"Chegamos ao dia 15! Você percebeu como os preços das ações mudaram ao longo do tempo?",
-			"Agora o segundo desafio matemático está disponível. Continue investindo quando quiser."
+			"Chegamos ao dia 15!",
+			"Os preços mudaram ao longo dos dias. O segundo desafio matemático está disponível. Continue investindo quando quiser!"
 		)
 		return
 
-	# Liberação de uma nova tentativa.
-	if bloqueado_ate_dia > 0:
-		if Market.dia >= bloqueado_ate_dia:
-			bloqueado_ate_dia = 0
+	# DIA 16
+	if Market.dia >= 16 and not aviso_dia_16:
+		aviso_dia_16 = true
 
+		_mostrar_fala(
+			"NOVA MISSÃO: APRENDA A VENDER!",
+			"Venda pelo menos uma ação da sua carteira. Não importa se houve lucro ou prejuízo. O importante é aprender a realizar uma venda!"
+		)
+		return
+
+	# DIA 17
+	if Market.dia >= 17 and not aviso_dia_17:
+		aviso_dia_17 = true
+
+		_mostrar_fala(
+			"Hora de observar suas escolhas!",
+			"Para avançar ao nível 3, chegue ao dia 20 com pelo menos uma ação na carteira apresentando variação diária positiva. Observe os preços e invista se desejar!"
+		)
+		return
+
+	# DIA 20
+	if Market.dia >= 20 and not aviso_dia_20:
+		aviso_dia_20 = true
+
+		_verificar_conclusao()
+
+		if not concluido:
 			_mostrar_fala(
-				"Uma nova oportunidade chegou!",
-				"Seu desafio matemático está disponível novamente. Você pode tentar quando quiser."
+				"Chegamos ao dia 20!",
+				"Agora precisamos conferir sua estratégia: duas questões resolvidas, pelo menos uma venda realizada e uma ação com variação positiva. Se faltar algo, continue jogando!"
 			)
+
+		return
+
+	# DIAS SEGUINTES
+	_verificar_conclusao()
+
+	if concluido:
+		return
+
+	if tentativa_liberada:
+		_mostrar_fala(
+			"Uma nova oportunidade chegou!",
+			"Seu desafio matemático foi desbloqueado. Você pode tentar novamente quando quiser."
+		)
 
 
 # ==================================================
@@ -833,13 +895,22 @@ func _missao_mudou() -> void:
 
 
 func _operacao_realizada(
-	_tipo: String,
+	tipo: String,
 	_ticker: String,
 	_quantidade_operacao: int,
 	_preco: float,
 	_lucro: float
 ) -> void:
 	_atualizar_mercado()
+
+	if tipo == "venda":
+		if GameState.venda_nivel_2_realizada:
+			_mostrar_fala(
+				"MISSÃO DE VENDA CONCLUÍDA!",
+				"Ótimo! Você realizou uma venda. Agora continue observando as variações do mercado para tomar suas próximas decisões."
+			)
+
+	_verificar_conclusao()
 
 
 # ==================================================
@@ -850,16 +921,30 @@ func _verificar_conclusao() -> void:
 	if concluido:
 		return
 
+	# Requisito 1: chegar ao dia 20.
+	if Market.dia < 20:
+		return
+
+	# Requisito 2: resolver as duas questões.
 	if questoes_resolvidas < 2:
 		return
 
-	# A missão Diversifique é a terceira missão.
-	if GameState.missao_indice < 3:
+	# Requisito 3: vender pelo menos uma ação
+	# a partir do dia 16.
+	if not GameState.venda_nivel_2_realizada:
 		return
 
+	# Requisito 4: possuir pelo menos uma ação
+	# com variação diária positiva.
+	if not Market.carteira_tem_acao_positiva():
+		return
+
+	# Todos os requisitos foram cumpridos.
 	concluido = true
+	GameState.nivel_2_concluido = true
+	GameState.fase_jogo = 3
 
 	_mostrar_fala(
-		"PARABÉNS! Você concluiu o nível 2 do Lucrey!",
-		"Você resolveu os dois desafios matemáticos e diversificou seus investimentos entre três setores diferentes."
+		"PARABÉNS! VOCÊ CONCLUIU O NÍVEL 2!",
+		"Você aprendeu a comprar, vender e acompanhar as variações das ações. Sua estratégia deu resultado! O nível 3 foi desbloqueado."
 	)
