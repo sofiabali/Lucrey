@@ -1,4 +1,5 @@
 
+
 extends CanvasLayer
 ## HUD: barra superior, painéis laterais, botão Investir, barra inferior
 ## e as telas cheias (carteira, notícias, missões, loja, conquistas, cotações).
@@ -48,7 +49,14 @@ func _ready() -> void:
 	painel_noticias.ver_noticias_pedido.connect(_abrir_tela.bind(tela_noticias))
 
 	# Conexões das telas cheias
-	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:
+	for tela: TelaCheia in [
+		tela_carteira,
+		tela_noticias,
+		tela_missoes,
+		tela_loja,
+		tela_conquistas,
+		tela_cotacoes
+	]:
 		tela.fechada.connect(_on_tela_fechada)
 
 	# Sinais do jogo
@@ -60,18 +68,45 @@ func _ready() -> void:
 
 	_atualizar_tudo()
 
-	# NOVO: inicia o tutorial da Mariane
-	call_deferred("_iniciar_tutorial_mariane")
+	# Inicia a fase correta da história.
+	if GameState.fase_jogo >= 2:
+		call_deferred("_iniciar_nivel_2")
+	else:
+		call_deferred("_iniciar_tutorial_mariane")
 
 
 # --- Tutorial da Mariane ----------------------------------------------
 
-# NOVO: cria e inicia o tutorial no HUD
 func _iniciar_tutorial_mariane() -> void:
+	if get_node_or_null("TutorialMariane") != null:
+		return
+
 	var cena: PackedScene = load("res://scenes/tutorial_mariane.tscn")
+
+	if cena == null:
+		push_error("Cena do tutorial da Mariane não encontrada.")
+		return
+
 	var tutorial = cena.instantiate()
 	add_child(tutorial)
 	tutorial.iniciar(self)
+
+
+# --- Nível 2: Introdução à Estratégia --------------------------------
+
+func _iniciar_nivel_2() -> void:
+	if get_node_or_null("Nivel2Mariane") != null:
+		return
+
+	var cena: PackedScene = load("res://scenes/nivel2_mariane.tscn")
+
+	if cena == null:
+		push_error("Cena do nível 2 não encontrada em res://scenes/nivel2_mariane.tscn")
+		return
+
+	var nivel_2 = cena.instantiate()
+	add_child(nivel_2)
+	nivel_2.iniciar(self)
 
 
 # --- Atualização do HUD -----------------------------------------------
@@ -92,9 +127,12 @@ func _atualizar_tudo() -> void:
 	else:
 		label_rentabilidade.remove_theme_color_override("font_color")
 
-	# Cartão do investidor
+	# Cartão do investidor (XP)
 	label_nivel.text = "NÍVEL %d" % GameState.nivel
-	label_xp.text = "%d / %d XP" % [GameState.xp, GameState.xp_para_proximo_nivel()]
+	label_xp.text = "%d / %d XP" % [
+		GameState.xp,
+		GameState.xp_para_proximo_nivel()
+	]
 	barra_xp.max_value = GameState.xp_para_proximo_nivel()
 	barra_xp.value = GameState.xp
 
@@ -112,13 +150,27 @@ func _abrir_tela(tela: TelaCheia) -> void:
 
 
 func _fechar_telas() -> void:
-	for tela: TelaCheia in [tela_carteira, tela_noticias, tela_missoes, tela_loja, tela_conquistas, tela_cotacoes]:
+	for tela: TelaCheia in [
+		tela_carteira,
+		tela_noticias,
+		tela_missoes,
+		tela_loja,
+		tela_conquistas,
+		tela_cotacoes
+	]:
 		tela.hide()
 
 
 ## Quando nenhuma tela cheia está aberta, a barra inferior volta para "Mapa".
 func _on_tela_fechada() -> void:
-	if not (tela_carteira.visible or tela_noticias.visible or tela_missoes.visible or tela_loja.visible or tela_conquistas.visible or tela_cotacoes.visible):
+	if not (
+		tela_carteira.visible
+		or tela_noticias.visible
+		or tela_missoes.visible
+		or tela_loja.visible
+		or tela_conquistas.visible
+		or tela_cotacoes.visible
+	):
 		barra_inferior.selecionar("Mapa")
 
 
@@ -153,9 +205,13 @@ func _on_botao_notificacoes_pressed() -> void:
 	var janela = $"TelaNotificações"
 	var painel = janela.get_node("CenterContainer")
 
-	painel.position = botao_notificacoes.global_position - janela.global_position + Vector2(
-		botao_notificacoes.size.x - painel.size.x,
-		botao_notificacoes.size.y + 8
+	painel.position = (
+		botao_notificacoes.global_position
+		- janela.global_position
+		+ Vector2(
+			botao_notificacoes.size.x - painel.size.x,
+			botao_notificacoes.size.y + 8
+		)
 	)
 
 	janela.show()
@@ -166,16 +222,30 @@ func _on_botao_config_pressed() -> void:
 	var janela = $"TelaConfigurações"
 	var painel = janela.get_node("CenterContainer")
 
-	painel.position = botao_config.global_position - janela.global_position + Vector2(
-		botao_config.size.x - painel.size.x,
-		botao_config.size.y + 8
+	painel.position = (
+		botao_config.global_position
+		- janela.global_position
+		+ Vector2(
+			botao_config.size.x - painel.size.x,
+			botao_config.size.y + 8
+		)
 	)
 
 	janela.show()
 
 
+# Botão Investir: abre o mercado do nível 2.
 func _on_botao_investir_pressed() -> void:
-	print("Investir")
+	if GameState.fase_jogo < 2:
+		print("Conclua o tutorial para liberar o mercado estratégico.")
+		return
+
+	var nivel_2 = get_node_or_null("Nivel2Mariane")
+
+	if nivel_2 != null:
+		nivel_2._abrir_mercado()
+	else:
+		_iniciar_nivel_2()
 
 
 func _on_dinheiro_mudou(_novo_valor: float) -> void:

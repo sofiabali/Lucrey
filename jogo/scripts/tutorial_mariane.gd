@@ -297,11 +297,12 @@ func _continuar() -> void:
 	if etapa == 6:
 		_mostrar_pergunta()
 	elif etapa == 10:
+		GameState.fase_jogo = 2
 		queue_free()
+		hud.call_deferred("_iniciar_nivel_2")
 	else:
 		etapa += 1
 		_mostrar_etapa()
-
 
 func _aba_clicada(nome: String) -> void:
 	if etapa == 2 and nome == "Notícias":
@@ -413,9 +414,13 @@ func _responder(correta: bool) -> void:
 
 
 # NOVO: chamado quando o jogador realmente avança o dia.
+
 func _dia_avancou(_dia: int) -> void:
 	if etapa != 8:
 		return
 
-	etapa = 9
-	_mostrar_etapa()
+	if Market.dia >= 10:
+		etapa = 10
+		_mostrar_etapa()
+	else:
+		instrucao.text = "Dia %d/10. Continue avançando!" % Market.dia

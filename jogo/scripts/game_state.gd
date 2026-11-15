@@ -1,4 +1,5 @@
 
+
 extends Node
 ## Autoload "GameState": dinheiro, carteira, XP, recursos e missões do jogador.
 
@@ -53,15 +54,24 @@ var moedas: int = 0
 var gemas: int = 0
 var missao_indice: int = 0
 
+# NOVO: controla a fase da história.
+# É independente do nível de XP.
+# Fase 1 = Tutorial
+# Fase 2 = Introdução à Estratégia
+var fase_jogo: int = 1
+
 
 # --- Ações -----------------------------------------------------------
 
 func comprar(ticker: String, quantidade: int) -> bool:
 	var acao: Stock = Market.buscar(ticker)
+
 	if acao == null or quantidade <= 0:
 		return false
 
+	# Fórmula: custo = preço unitário x quantidade
 	var custo := acao.preco * quantidade
+
 	if custo > dinheiro:
 		return false
 
@@ -71,30 +81,46 @@ func comprar(ticker: String, quantidade: int) -> bool:
 
 	_verificar_missao()
 	dinheiro_mudou.emit(dinheiro)
-	operacao_realizada.emit("compra", ticker, quantidade, acao.preco, 0.0)
+
+	operacao_realizada.emit(
+		"compra",
+		ticker,
+		quantidade,
+		acao.preco,
+		0.0
+	)
+
 	return true
 
 
 func vender(ticker: String, quantidade: int) -> bool:
 	var acao: Stock = Market.buscar(ticker)
+
 	if acao == null or quantidade <= 0:
 		return false
 
 	if carteira.get(ticker, 0) < quantidade:
 		return false
 
-	# Tira da posição a parte proporcional do custo que foi vendida
+	# Tira da posição a parte proporcional do custo vendido.
 	var qtd_antes: int = carteira[ticker]
 	var custo_atual: float = custo_total.get(ticker, 0.0)
 
-	# Lucro desta venda em %, comparando com o custo médio por ação
+	# Fórmula: custo médio = custo total / quantidade
 	var custo_medio: float = custo_atual / qtd_antes
+
 	var lucro_pct := 0.0
 
+	# Fórmula: lucro percentual =
+	# (preço atual / custo médio - 1) x 100
 	if custo_medio > 0.0:
 		lucro_pct = (acao.preco / custo_medio - 1.0) * 100.0
 
-	custo_total[ticker] = custo_atual - custo_atual * quantidade / qtd_antes
+	custo_total[ticker] = (
+		custo_atual
+		- custo_atual * quantidade / qtd_antes
+	)
+
 	carteira[ticker] -= quantidade
 
 	if carteira[ticker] == 0:
@@ -102,7 +128,15 @@ func vender(ticker: String, quantidade: int) -> bool:
 
 	dinheiro += acao.preco * quantidade
 	dinheiro_mudou.emit(dinheiro)
-	operacao_realizada.emit("venda", ticker, quantidade, acao.preco, lucro_pct)
+
+	operacao_realizada.emit(
+		"venda",
+		ticker,
+		quantidade,
+		acao.preco,
+		lucro_pct
+	)
+
 	return true
 
 
@@ -123,6 +157,7 @@ func custo_da_posicao(ticker: String) -> float:
 func lucro_da_posicao(ticker: String) -> float:
 	var acao: Stock = Market.buscar(ticker)
 	var qtd: int = carteira.get(ticker, 0)
+
 	return acao.preco * qtd - custo_da_posicao(ticker)
 
 
@@ -164,6 +199,7 @@ func gastar_moedas(quantidade: int) -> bool:
 
 	moedas -= quantidade
 	moedas_mudou.emit()
+
 	return true
 
 
@@ -197,7 +233,6 @@ func progresso_missao() -> int:
 
 			return total
 
-		# NOVO: progresso da missão de patrimônio
 		"patrimonio":
 			return int(patrimonio())
 
@@ -208,10 +243,13 @@ func progresso_missao() -> int:
 				var qtd: int = carteira[ticker]
 
 				if qtd > 0:
-					var setor: String = Market.buscar(ticker).setor
+					var acao: Stock = Market.buscar(ticker)
 
-					if not setores.has(setor):
-						setores.append(setor)
+					if acao != null:
+						var setor: String = acao.setor
+
+						if not setores.has(setor):
+							setores.append(setor)
 
 			return setores.size()
 
@@ -220,8 +258,6 @@ func progresso_missao() -> int:
 
 # --- Recompensa do tutorial da Mariane --------------------------------
 
-# NOVO: adiciona dinheiro fictício ao jogador
-# e verifica se a missão de patrimônio foi concluída.
 func receber_bonus_tutorial(valor: float) -> void:
 	if valor <= 0.0:
 		return
