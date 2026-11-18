@@ -1,6 +1,4 @@
-
 extends Node
-## Autoload "Market": mantém as ações, o relógio do jogo e as notícias.
 
 signal dia_avancou(dia: int)
 signal noticias_mudou
@@ -23,10 +21,10 @@ const MODELOS_RUINS := [
 
 var dia: int = 0
 var acoes: Array[Stock] = []
-
-## Mais recente primeiro:
-## {"dia", "texto", "ticker", "positiva"}
 var noticias: Array[Dictionary] = []
+
+# Noticia reservada para o proximo dia
+var proxima_noticia: Dictionary = {}
 
 
 func _ready() -> void:
@@ -57,7 +55,13 @@ func _adicionar(
 func avancar_dia() -> void:
 	dia += 1
 
-	var choques: Dictionary = _sortear_noticia()
+	var choques: Dictionary = {}
+
+	if not proxima_noticia.is_empty():
+		choques = _aplicar_noticia(proxima_noticia)
+		proxima_noticia.clear()
+	else:
+		choques = _sortear_noticia()
 
 	for a in acoes:
 		a.avancar_dia(
@@ -76,6 +80,11 @@ func _sortear_noticia() -> Dictionary:
 	if randf() > CHANCE_NOTICIA:
 		return choques
 
+	var noticia := _gerar_noticia()
+	return _aplicar_noticia(noticia)
+
+
+func _gerar_noticia() -> Dictionary:
 	var acao: Stock = acoes.pick_random()
 	var positiva := randf() < 0.5
 
@@ -83,23 +92,50 @@ func _sortear_noticia() -> Dictionary:
 		MODELOS_BOAS if positiva else MODELOS_RUINS
 	).pick_random()
 
-	choques[acao.ticker] = (
+	return {
+		"texto": modelo % acao.nome,
+		"ticker": acao.ticker,
+		"positiva": positiva
+	}
+
+
+func _aplicar_noticia(noticia: Dictionary) -> Dictionary:
+	var impacto: float = (
 		IMPACTO_NOTICIA
-		if positiva
+		if noticia["positiva"]
 		else -IMPACTO_NOTICIA
 	)
 
 	noticias.push_front({
 		"dia": dia,
-		"texto": modelo % acao.nome,
-		"ticker": acao.ticker,
-		"positiva": positiva,
+		"texto": noticia["texto"],
+		"ticker": noticia["ticker"],
+		"positiva": noticia["positiva"]
 	})
 
 	if noticias.size() > MAX_NOTICIAS:
 		noticias.pop_back()
 
-	return choques
+	return {noticia["ticker"]: impacto}
+
+
+func consultar_dica() -> String:
+	if not GameState.dica_mercado_disponivel:
+		return "Voce nao possui uma dica disponivel."
+
+	if proxima_noticia.is_empty():
+		proxima_noticia = _gerar_noticia()
+
+	GameState.dica_mercado_disponivel = false
+
+	return (
+		"PREVISAO DO DIA %d:\n%s\nEmpresa: %s"
+		% [
+			dia + 1,
+			proxima_noticia["texto"],
+			proxima_noticia["ticker"]
+		]
+	)
 
 
 func buscar(ticker: String) -> Stock:
@@ -110,9 +146,6 @@ func buscar(ticker: String) -> Stock:
 	return null
 
 
-## NOVO: variação percentual do último dia.
-## Compara os dois preços mais recentes.
-## Não usa o preço que o jogador pagou.
 func variacao_diaria(ticker: String) -> float:
 	var acao: Stock = buscar(ticker)
 
@@ -136,8 +169,6 @@ func variacao_diaria(ticker: String) -> float:
 	return 0.0
 
 
-## NOVO: verifica se existe pelo menos uma ação
-## com variação positiva na carteira do jogador.
 func carteira_tem_acao_positiva() -> bool:
 	for ticker in GameState.carteira:
 		var quantidade: int = int(

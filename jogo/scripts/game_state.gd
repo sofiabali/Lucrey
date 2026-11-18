@@ -1,13 +1,12 @@
 
 extends Node
-## Autoload "GameState": dinheiro, carteira, XP,
-## recursos, missões e progresso do jogador.
 
 signal dinheiro_mudou(novo_valor: float)
 signal xp_mudou
 signal moedas_mudou
 signal gemas_mudou
 signal missao_mudou
+signal loja_mudou
 
 signal operacao_realizada(
 	tipo: String,
@@ -47,11 +46,7 @@ const MISSOES: Array = [
 ]
 
 var dinheiro: float = DINHEIRO_INICIAL
-
-## ticker -> quantidade de ações
 var carteira: Dictionary = {}
-
-## ticker -> R$ gasto na posição atual
 var custo_total: Dictionary = {}
 
 var nivel: int = 1
@@ -60,16 +55,21 @@ var moedas: int = 0
 var gemas: int = 0
 var missao_indice: int = 0
 
-## Fase da história, independente do XP.
 var fase_jogo: int = 1
-
-## NOVO: progresso das missões do nível 2.
 var venda_nivel_2_realizada: bool = false
 var nivel_2_concluido: bool = false
 
+# SISTEMA DA LOJA
+var itens_comprados: Dictionary = {}
+var total_moedas_gastas: int = 0
+var historico_compras: Array[Dictionary] = []
+
+var boost_xp_ate_dia: int = -1
+var dica_mercado_disponivel: bool = false
+
 
 # ==================================================
-# AÇÕES
+# ACOES
 # ==================================================
 
 func comprar(ticker: String, quantidade: int) -> bool:
@@ -117,15 +117,8 @@ func vender(ticker: String, quantidade: int) -> bool:
 		return false
 
 	var qtd_antes: int = carteira[ticker]
-	var custo_atual: float = custo_total.get(
-		ticker,
-		0.0
-	)
-
-	var custo_medio: float = (
-		custo_atual / qtd_antes
-	)
-
+	var custo_atual: float = custo_total.get(ticker, 0.0)
+	var custo_medio: float = custo_atual / qtd_antes
 	var lucro_pct := 0.0
 
 	if custo_medio > 0.0:
@@ -145,8 +138,6 @@ func vender(ticker: String, quantidade: int) -> bool:
 
 	dinheiro += acao.preco * quantidade
 
-	# NOVO: a missão de venda só conta
-	# a partir do dia 16 do nível 2.
 	if fase_jogo == 2 and Market.dia >= 16:
 		venda_nivel_2_realizada = true
 
@@ -170,9 +161,7 @@ func valor_da_carteira() -> float:
 		var acao: Stock = Market.buscar(str(ticker))
 
 		if acao != null:
-			total += (
-				acao.preco * int(carteira[ticker])
-			)
+			total += acao.preco * int(carteira[ticker])
 
 	return total
 
@@ -205,15 +194,27 @@ func rentabilidade() -> float:
 
 
 # ==================================================
-# XP E NÍVEL
+# XP E NIVEL
 # ==================================================
 
 func xp_para_proximo_nivel() -> int:
 	return nivel * 250
 
 
+func boost_xp_ativo() -> bool:
+	return boost_xp_ate_dia == Market.dia
+
+
 func ganhar_xp(quantidade: int) -> void:
-	xp += quantidade
+	if quantidade <= 0:
+		return
+
+	var recebido := quantidade
+
+	if boost_xp_ativo():
+		recebido *= 2
+
+	xp += recebido
 
 	while xp >= xp_para_proximo_nivel():
 		xp -= xp_para_proximo_nivel()
@@ -227,6 +228,9 @@ func ganhar_xp(quantidade: int) -> void:
 # ==================================================
 
 func ganhar_moedas(quantidade: int) -> void:
+	if quantidade <= 0:
+		return
+
 	moedas += quantidade
 	moedas_mudou.emit()
 
@@ -247,7 +251,48 @@ func ganhar_gemas(quantidade: int) -> void:
 
 
 # ==================================================
-# MISSÕES ORIGINAIS
+# LOJA
+# ==================================================
+
+func comprar_item_loja(item: Dictionary) -> bool:
+	var id: String = str(item["id"])
+	var preco: int = int(item["preco"])
+
+	if itens_comprados.has(id):
+		return false
+
+	if preco <= 0 or moedas < preco:
+		return false
+
+	# Somente os beneficios implementados
+	if id != "boost_xp" and id != "dica":
+		return false
+
+	if not gastar_moedas(preco):
+		return false
+
+	itens_comprados[id] = true
+	total_moedas_gastas += preco
+
+	historico_compras.append({
+		"nome": str(item["nome"]),
+		"preco": preco,
+		"dia": Market.dia
+	})
+
+	match id:
+		"boost_xp":
+			boost_xp_ate_dia = Market.dia
+
+		"dica":
+			dica_mercado_disponivel = true
+
+	loja_mudou.emit()
+	return true
+
+
+# ==================================================
+# MISSOES ORIGINAIS
 # ==================================================
 
 func missao_atual() -> Dictionary:
@@ -282,9 +327,7 @@ func progresso_missao() -> int:
 				var qtd: int = carteira[ticker]
 
 				if qtd > 0:
-					var acao: Stock = Market.buscar(
-						str(ticker)
-					)
+					var acao: Stock = Market.buscar(str(ticker))
 
 					if acao != null:
 						if not setores.has(acao.setor):
