@@ -27,11 +27,13 @@ var noticias: Array[Dictionary] = []
 var proxima_noticia: Dictionary = {}
 
 
+
 func _ready() -> void:
-	_adicionar("PETR4", "Petrobras", "Energia", 38.0, 0.025)
-	_adicionar("VALE3", "Vale", "Mineração", 62.0, 0.020)
-	_adicionar("ITUB4", "Itaú", "Bancos", 33.0, 0.015)
-	_adicionar("BBDC4", "Bradesco", "Bancos", 14.0, 0.018)
+	_adicionar("PETR4", "Petrolinho Energia", "Energia", 38.0, 0.025)
+	_adicionar("VALE3", "MontVale Mineração", "Mineração", 62.0, 0.020)
+	_adicionar("ITUB4", "Banco Aurora", "Bancos", 33.0, 0.015)
+	_adicionar("BBDC4", "Banco Horizonte", "Bancos", 14.0, 0.018)
+
 
 
 func _adicionar(

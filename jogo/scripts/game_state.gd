@@ -1,4 +1,9 @@
 
+
+
+
+
+
 extends Node
 
 signal dinheiro_mudou(novo_valor: float)
@@ -17,6 +22,8 @@ signal operacao_realizada(
 )
 
 const DINHEIRO_INICIAL := 1000.0
+# Meta acumulada para concluir o nivel 2.
+const META_XP_NIVEL_2 := 900
 
 const MISSOES: Array = [
 	{
@@ -55,7 +62,18 @@ var moedas: int = 0
 var gemas: int = 0
 var missao_indice: int = 0
 
-var fase_jogo: int = 1
+# A fase e o nivel representam a mesma coisa.
+# Mantemos fase_jogo por compatibilidade com os outros scripts.
+var fase_jogo: int = 1:
+	set(valor):
+		if valor == fase_jogo:
+			return
+		var nivel_anterior: int = fase_jogo
+		fase_jogo = valor
+		nivel = valor
+		if valor > nivel_anterior:
+			xp = 0
+		xp_mudou.emit()
 var venda_nivel_2_realizada: bool = false
 var nivel_2_concluido: bool = false
 
@@ -198,7 +216,16 @@ func rentabilidade() -> float:
 # ==================================================
 
 func xp_para_proximo_nivel() -> int:
-	return nivel * 250
+	# A barra do nivel 2 mostra a meta, nao sobe de nivel sozinha.
+	return META_XP_NIVEL_2
+
+
+func xp_faltante_nivel_2() -> int:
+	return maxi(0, META_XP_NIVEL_2 - xp)
+
+
+func todas_missoes_concluidas() -> bool:
+	return missao_indice >= MISSOES.size()
 
 
 func boost_xp_ativo() -> bool:
@@ -213,19 +240,16 @@ func ganhar_xp(quantidade: int) -> void:
 
 	if boost_xp_ativo():
 		recebido *= 2
-
-		# O bonus vale para a proxima recompensa de XP,
-		# mesmo que o jogador avance o dia antes de recebe-la.
+		# O bônus vale para a próxima recompensa de XP,
+		# mesmo que o jogador avance o dia antes de recebê-la.
 		boost_xp_ate_dia = -1
 		itens_comprados.erase("boost_xp")
 		loja_mudou.emit()
 
 	xp += recebido
 
-	while xp >= xp_para_proximo_nivel():
-		xp -= xp_para_proximo_nivel()
-		nivel += 1
-
+	# XP acumulado nunca e consumido. O nivel muda apenas
+	# quando os objetivos da historia sao cumpridos.
 	xp_mudou.emit()
 
 
