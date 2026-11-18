@@ -1,5 +1,4 @@
 
-
 extends CanvasLayer
 ## HUD: barra superior, painéis laterais, botão Investir, barra inferior
 ## e as telas cheias (carteira, notícias, missões, loja, conquistas, cotações).
@@ -128,7 +127,7 @@ func _atualizar_tudo() -> void:
 		label_rentabilidade.remove_theme_color_override("font_color")
 
 	# Cartão do investidor (XP)
-	label_nivel.text = "NÍVEL %d" % GameState.nivel
+	label_nivel.text = "FASE %d | XP NÍVEL %d" % [GameState.fase_jogo, GameState.nivel]
 	label_xp.text = "%d / %d XP" % [
 		GameState.xp,
 		GameState.xp_para_proximo_nivel()

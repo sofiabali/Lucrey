@@ -6,7 +6,7 @@ const ITENS := [
 		"id": "boost_xp",
 		"categoria": "Boosts",
 		"nome": "Boost de XP",
-		"desc": "Receba XP em dobro ate avancar o dia.",
+		"desc": "Dobre a próxima recompensa de XP, mesmo após avançar o dia.",
 		"preco": 100,
 		"disponivel": true
 	},
@@ -76,7 +76,7 @@ func _atualizar() -> void:
 	if GameState.boost_xp_ativo():
 		conteudo.add_child(
 			criar_label(
-				"XP EM DOBRO ATIVO - DIA %d" % Market.dia,
+				"XP EM DOBRO ATIVO - PRÓXIMA RECOMPENSA",
 				17,
 				COR_BOA
 			)
@@ -161,7 +161,6 @@ func _criar_cartao_item(item: Dictionary) -> PanelContainer:
 
 	botao.disabled = ja_tem or not disponivel or sem_saldo
 
-	# Cada botao recebe somente o ID do proprio item.
 	botao.pressed.connect(_comprar_item.bind(id))
 
 	linha.add_child(botao)
@@ -172,7 +171,6 @@ func _criar_cartao_item(item: Dictionary) -> PanelContainer:
 func _comprar_item(id: String) -> void:
 	var item_escolhido: Dictionary = {}
 
-	# Encontra somente o item clicado.
 	for item in ITENS:
 		if str(item["id"]) == id:
 			item_escolhido = item.duplicate()
@@ -190,7 +188,6 @@ func _comprar_item(id: String) -> void:
 	var preco: int = int(item_escolhido["preco"])
 	var saldo_anterior: int = GameState.moedas
 
-	# Compra somente o item selecionado.
 	var sucesso: bool = GameState.comprar_item_loja(
 		item_escolhido
 	)

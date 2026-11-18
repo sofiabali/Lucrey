@@ -202,7 +202,7 @@ func xp_para_proximo_nivel() -> int:
 
 
 func boost_xp_ativo() -> bool:
-	return boost_xp_ate_dia == Market.dia
+	return boost_xp_ate_dia >= 0
 
 
 func ganhar_xp(quantidade: int) -> void:
@@ -213,6 +213,12 @@ func ganhar_xp(quantidade: int) -> void:
 
 	if boost_xp_ativo():
 		recebido *= 2
+
+		# O bonus vale para a proxima recompensa de XP,
+		# mesmo que o jogador avance o dia antes de recebe-la.
+		boost_xp_ate_dia = -1
+		itens_comprados.erase("boost_xp")
+		loja_mudou.emit()
 
 	xp += recebido
 
