@@ -1,0 +1,95 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="TileSet" path="res://lucrey_tileset.tres" id="1_tileset"]
+[ext_resource type="Script" path="res://camera_controller.gd" id="2_camera"]
+
+[node name="MainGame" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_set = ExtResource("1_tileset")
+
+[node name="EntitiesYort" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 0)
+script = ExtResource("2_camera")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUDTopBar" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/HUDTopBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HUDTopBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_top = 0.5
+offset_left = -100.0
+offset_top = -11.5
+offset_right = 100.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lucrey City - HUD"
+horizontal_alignment = 1
+
+[node name="NavBar" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/NavBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/NavBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_top = 0.5
+offset_left = -150.0
+offset_top = -20.0
+offset_right = 150.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="BtnBuild" type="Button" parent="CanvasLayer/NavBar/HBoxContainer"]
+layout_mode = 2
+text = " Prédios "
+
+[node name="BtnRoad" type="Button" parent="CanvasLayer/NavBar/HBoxContainer"]
+layout_mode = 2
+text = " Ruas "
+
+[node name="BtnVehicles" type="Button" parent="CanvasLayer/NavBar/HBoxContainer"]
+layout_mode = 2
+text = " Veículos "

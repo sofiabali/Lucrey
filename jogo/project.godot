@@ -19,15 +19,19 @@ config/icon="res://icon.svg"
 
 GameState="*uid://bbo25stpvv050"
 Market="*uid://d2yqdylowmveo"
+Conquistas="*uid://d4m2k2fn10w0w"
 
 [display]
 
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [gui]
 
-theme/custom="uid://b2fm4ln5os0ra"
+theme/custom="uid://da1ca2f8a58rd"
 
 [input]
 
@@ -66,3 +70,4 @@ pular={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.4509096, 0.562273, 0.6746862, 1)

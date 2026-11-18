@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ce4xsahs6vibu"]
+
+[ext_resource type="Script" uid="uid://dwrxeuccoiktg" path="res://scripts/tela_loja.gd" id="1_7hrej"]
+
+[node name="TelaLoja" type="Control" unique_id=1496359091]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7hrej")

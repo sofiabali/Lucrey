@@ -45,31 +45,7 @@ O jogo será dividido em **níveis**, aumentando gradualmente a dificuldade e ap
 * **Nível 7 — Desafio final:** aplicação dos conhecimentos adquiridos durante o jogo.
 
 
-## 📂 Estrutura do projeto 
-(por enquanto)
 
-```text
-LUCREY/
-│
-├── README.md
-│
-├── docs/
-│   ├── regras-do-jogo.md
-│   ├── niveis.md
-│   ├── matematica.md
-│   └── sistema-de-pontuacao.md
-│
-├── assets/
-│   ├── logo.png
-│   ├── telas/
-│   ├── graficos/
-│   └── fluxogramas/
-│
-├── src/
-│   └── código do jogo
-│
-└── TODO.md
-```
 
 ---
 
