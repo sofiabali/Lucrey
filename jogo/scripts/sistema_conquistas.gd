@@ -41,10 +41,13 @@ var _label_descricao: Label
 
 func _ready() -> void:
 	_carregar()
+
+	if OS.has_feature("editor"):
+		resetar()
+
 	_criar_aviso()
 	GameState.operacao_realizada.connect(_on_operacao_realizada)
 	Market.dia_avancou.connect(_on_dia_avancou)
-
 
 # ---------------------------------------------------------------------------
 # Eventos do jogo
